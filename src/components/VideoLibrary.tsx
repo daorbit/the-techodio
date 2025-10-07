@@ -109,7 +109,7 @@ const VideoLibrary = () => {
       <ContentHeader>
         <Box>
           <Typography
-            variant="h5"
+            variant="h2"
             sx={{
               background: themeMode === 'dark'
                 ? "linear-gradient(90deg,#00e5ff,#ff9800)"
