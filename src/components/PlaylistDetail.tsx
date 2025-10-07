@@ -28,7 +28,7 @@ import {
 const PlaylistDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { isDarkMode } = useThemeContext();
+  const { themeMode } = useThemeContext();
   const dispatch = useAppDispatch();
 
   // Get audio state from Redux
@@ -45,12 +45,12 @@ const PlaylistDetail = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: isDarkMode
+          background: themeMode === 'dark'
             ? "linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%)"
             : "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
         }}
       >
-        <Typography variant="h6" sx={{ color: isDarkMode ? "#fff" : "#000" }}>
+        <Typography variant="h6" sx={{ color: themeMode === 'dark' ? "#fff" : "#000" }}>
           Playlist not found
         </Typography>
       </Box>
@@ -84,10 +84,10 @@ const PlaylistDetail = () => {
           startIcon={<ArrowLeft size={20} />}
           onClick={handleBack}
           sx={{
-            color: isDarkMode ? "#00e5ff" : "#1976d2",
+            color: themeMode === 'dark' ? "#00e5ff" : "#1976d2",
             mb: 2,
             "&:hover": {
-              background: isDarkMode
+              background: themeMode === 'dark'
                 ? "rgba(0,229,255,0.1)"
                 : "rgba(25,118,210,0.1)",
             },
@@ -115,7 +115,7 @@ const PlaylistDetail = () => {
             height: { xs: 250, md: 300 },
             borderRadius: 3,
             overflow: "hidden",
-            boxShadow: isDarkMode
+            boxShadow: themeMode === 'dark'
               ? "0 20px 40px rgba(0,229,255,0.2)"
               : "0 20px 40px rgba(0,0,0,0.15)",
             position: "relative",
@@ -184,7 +184,7 @@ const PlaylistDetail = () => {
               fontWeight: "bold",
               mb: 2,
               fontSize: { xs: "2rem", md: "3rem" },
-              background: isDarkMode
+              background: themeMode === 'dark'
                 ? "linear-gradient(90deg, #00e5ff, #ff9800)"
                 : "linear-gradient(90deg, #1976d2, #42a5f5)",
               WebkitBackgroundClip: "text",
@@ -198,7 +198,7 @@ const PlaylistDetail = () => {
           <Typography
             variant="body1"
             sx={{
-              color: isDarkMode ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.7)",
+              color: themeMode === 'dark' ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.7)",
               mb: 3,
               lineHeight: 1.6,
               fontSize: { xs: "1rem", md: "1.1rem" },
@@ -220,11 +220,11 @@ const PlaylistDetail = () => {
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <Music
                 size={18}
-                style={{ color: isDarkMode ? "#00e5ff" : "#1976d2" }}
+                style={{ color: themeMode === 'dark' ? "#00e5ff" : "#1976d2" }}
               />
               <Typography
                 variant="body2"
-                sx={{ color: isDarkMode ? "#fff" : "#000" }}
+                sx={{ color: themeMode === 'dark' ? "#fff" : "#000" }}
               >
                 {playlist.trackCount} tracks
               </Typography>
@@ -232,11 +232,11 @@ const PlaylistDetail = () => {
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <Clock
                 size={18}
-                style={{ color: isDarkMode ? "#00e5ff" : "#1976d2" }}
+                style={{ color: themeMode === 'dark' ? "#00e5ff" : "#1976d2" }}
               />
               <Typography
                 variant="body2"
-                sx={{ color: isDarkMode ? "#fff" : "#000" }}
+                sx={{ color: themeMode === 'dark' ? "#fff" : "#000" }}
               >
                 {playlist.duration}
               </Typography>
@@ -244,11 +244,11 @@ const PlaylistDetail = () => {
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <Users
                 size={18}
-                style={{ color: isDarkMode ? "#00e5ff" : "#1976d2" }}
+                style={{ color: themeMode === 'dark' ? "#00e5ff" : "#1976d2" }}
               />
               <Typography
                 variant="body2"
-                sx={{ color: isDarkMode ? "#fff" : "#000" }}
+                sx={{ color: themeMode === 'dark' ? "#fff" : "#000" }}
               >
                 {playlist.isPublic ? "Public" : "Private"}
               </Typography>
@@ -270,12 +270,12 @@ const PlaylistDetail = () => {
                 key={tag}
                 label={tag}
                 sx={{
-                  background: isDarkMode
+                  background: themeMode === 'dark'
                     ? "rgba(0,229,255,0.1)"
                     : "rgba(25,118,210,0.1)",
-                  color: isDarkMode ? "#00e5ff" : "#1976d2",
+                  color: themeMode === 'dark' ? "#00e5ff" : "#1976d2",
                   border: `1px solid ${
-                    isDarkMode ? "rgba(0,229,255,0.3)" : "rgba(25,118,210,0.3)"
+                    themeMode === 'dark' ? "rgba(0,229,255,0.3)" : "rgba(25,118,210,0.3)"
                   }`,
                 }}
               />
@@ -301,7 +301,7 @@ const PlaylistDetail = () => {
           sx={{
             fontWeight: "bold",
             mb: 3,
-            color: isDarkMode ? "#fff" : "#000",
+            color: themeMode === 'dark' ? "#fff" : "#000",
             fontSize: { xs: "1.5rem", md: "2rem" },
           }}
         >
@@ -310,12 +310,12 @@ const PlaylistDetail = () => {
 
         <Card
           sx={{
-            background: isDarkMode
+            background: themeMode === 'dark'
               ? "rgba(255,255,255,0.05)"
               : "rgba(255,255,255,0.9)",
             backdropFilter: "blur(20px)",
             border: `1px solid ${
-              isDarkMode ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.08)"
+              themeMode === 'dark' ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.08)"
             }`,
             borderRadius: 3,
             mx: { xs: -1, md: 0 },
@@ -329,13 +329,13 @@ const PlaylistDetail = () => {
                   borderBottom:
                     index < playlist.tracks.length - 1
                       ? `1px solid ${
-                          isDarkMode
+                          themeMode === 'dark'
                             ? "rgba(255,255,255,0.1)"
                             : "rgba(0,0,0,0.08)"
                         }`
                       : "none",
                   "&:hover": {
-                    background: isDarkMode
+                    background: themeMode === 'dark'
                       ? "rgba(255,255,255,0.05)"
                       : "rgba(0,0,0,0.02)",
                   },
@@ -352,7 +352,7 @@ const PlaylistDetail = () => {
                       height: { xs: 40, md: 50 },
                       mr: { xs: 1.5, md: 2 },
                       border: `2px solid ${
-                        isDarkMode ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.1)"
+                        themeMode === 'dark' ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.1)"
                       }`,
                     }}
                   >
@@ -366,7 +366,7 @@ const PlaylistDetail = () => {
                       variant="body1"
                       sx={{
                         fontWeight: "medium",
-                        color: isDarkMode ? "#fff" : "#000",
+                        color: themeMode === 'dark' ? "#fff" : "#000",
                         mb: 0.5,
                       }}
                     >
@@ -378,7 +378,7 @@ const PlaylistDetail = () => {
                       <Typography
                         variant="body2"
                         sx={{
-                          color: isDarkMode
+                          color: themeMode === 'dark'
                             ? "rgba(255,255,255,0.6)"
                             : "rgba(0,0,0,0.6)",
                         }}
@@ -388,7 +388,7 @@ const PlaylistDetail = () => {
                       <Typography
                         variant="caption"
                         sx={{
-                          color: isDarkMode
+                          color: themeMode === 'dark'
                             ? "rgba(255,255,255,0.5)"
                             : "rgba(0,0,0,0.5)",
                           display: "flex",
@@ -416,14 +416,14 @@ const PlaylistDetail = () => {
                       sx={{
                         color:
                           currentTrack?.id === track.id && isPlaying
-                            ? isDarkMode
+                            ? themeMode === 'dark'
                               ? "#00e5ff"
                               : "#1976d2"
-                            : isDarkMode
+                            : themeMode === 'dark'
                             ? "rgba(255,255,255,0.5)"
                             : "rgba(0,0,0,0.5)",
                         "&:hover": {
-                          color: isDarkMode ? "#00e5ff" : "#1976d2",
+                          color: themeMode === 'dark' ? "#00e5ff" : "#1976d2",
                         },
                         p: { xs: 0.5, md: 1 },
                       }}

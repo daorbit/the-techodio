@@ -1,16 +1,29 @@
-/* Active sidebar link styling */
-.sidebar-active {
-  background: #3730a3 !important;
-}
-:root{
+/* Layout CSS Variables */
+:root {
   --header-height: 64px;
-  --bg: #0f172a;
-  --muted: #94a3b8;
-  --accent: #06b6d4;
-  --surface: #0b1220;
+  --sidebar-width: 240px;
+  --sidebar-collapsed-width: 64px;
+  
+  /* Layout spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  
+  /* Z-index scale */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
 }
 
-.app-shell{
+/* Modern App Shell */
+.app-shell {
   display: grid;
   grid-template-rows: var(--header-height) 1fr;
   grid-template-columns: var(--sidebar-width) 1fr;
@@ -18,77 +31,311 @@
     "header header"
     "sidebar main";
   height: 100vh;
-  color: #e6eef8;
-  background: linear-gradient(180deg,#071023 0%, #071633 100%);
+  background: var(--color-background);
+  color: var(--color-text-primary);
+  transition: all 0.3s ease;
 }
 
-.app-header{
+.app-shell.sidebar-collapsed {
+  grid-template-columns: var(--sidebar-collapsed-width) 1fr;
+}
+
+/* Header Styling */
+.app-header {
   grid-area: header;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1rem;
+  padding: 0 var(--spacing-lg);
   height: var(--header-height);
-  background: rgba(255,255,255,0.02);
-  border-bottom: 1px solid rgba(255,255,255,0.03);
-}
-.brand{
-  font-weight: 700;
-  letter-spacing: 0.6px;
-}
-.header-nav a{
-  margin: 0 0.5rem;
-  color: var(--muted);
-  text-decoration: none;
-}
-.header-actions .btn{
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.06);
-  color: var(--muted);
-  padding: 6px 10px;
-  border-radius: 6px;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-sm);
+  z-index: var(--z-sticky);
+  position: sticky;
+  top: 0;
 }
 
-.app-sidebar{
+.brand {
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: -0.025em;
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.brand-icon {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.header-nav a {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+}
+
+.header-nav a:hover {
+  color: var(--color-primary);
+  background: rgba(99, 102, 241, 0.1);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--color-text-secondary);
+}
+
+.theme-toggle:hover {
+  background: var(--color-primary);
+  color: white;
+  transform: scale(1.05);
+}
+
+/* Sidebar Styling */
+.app-sidebar {
   grid-area: sidebar;
-  height: 100%;
-  background: linear-gradient(180deg,#0f172a 0%, #071633 100%);
-  color: #e6eef8;
-  border-right: 1px solid #1e293b;
+  height: 100vh;
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-border);
   display: flex;
   flex-direction: column;
-  min-width: var(--sidebar-width);
-  box-shadow: 2px 0 8px rgba(0,0,0,0.03);
-  padding: 0;
+  overflow-y: auto;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+  position: sticky;
+  top: 0;
 }
-.sidebar-list{
+
+.sidebar-header {
+  padding: var(--spacing-lg);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.sidebar-content {
+  flex: 1;
+  padding: var(--spacing-md);
+}
+
+.sidebar-footer {
+  padding: var(--spacing-lg);
+  border-top: 1px solid var(--color-border-light);
+  margin-top: auto;
+}
+
+.sidebar-nav {
   list-style: none;
   padding: 0;
   margin: 0;
-}
-.sidebar-list li{
-  margin: 0.6rem 0;
-}
-.sidebar-list a{
-  color: var(--muted);
-  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
 }
 
-.app-main{
+.sidebar-nav-item {
+  display: flex;
+}
+
+.sidebar-nav-link {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
+  width: 100%;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.sidebar-nav-link:hover {
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--color-primary);
+  transform: translateX(2px);
+}
+
+.sidebar-nav-link.active {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+  color: white;
+  font-weight: 600;
+}
+
+.sidebar-nav-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sidebar-nav-text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebar-badge {
+  background: var(--color-primary);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.125rem 0.375rem;
+  border-radius: 9999px;
+  min-width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Main Content Area */
+.app-main {
   grid-area: main;
-  background: #f8fafc0a;
-  padding: 2rem;
+  background: var(--color-background);
   min-height: 0;
   overflow-y: auto;
+  position: relative;
 }
 
-/* Responsive: collapse sidebar on small screens */
-@media (max-width: 800px){
-  .app-shell{
+.main-content {
+  padding: var(--spacing-xl);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Collapsed Sidebar Styles */
+.app-sidebar.collapsed {
+  width: var(--sidebar-collapsed-width);
+}
+
+.app-sidebar.collapsed .sidebar-nav-text,
+.app-sidebar.collapsed .sidebar-badge {
+  display: none;
+}
+
+.app-sidebar.collapsed .sidebar-nav-link {
+  justify-content: center;
+  padding: var(--spacing-md) var(--spacing-sm);
+}
+
+.app-sidebar.collapsed .sidebar-header,
+.app-sidebar.collapsed .sidebar-footer {
+  padding: var(--spacing-md) var(--spacing-sm);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .app-shell {
     grid-template-columns: 1fr;
     grid-template-areas:
       "header"
       "main";
   }
-  .app-sidebar{display:none}
+  
+  .app-sidebar {
+    position: fixed;
+    left: -100%;
+    top: var(--header-height);
+    height: calc(100vh - var(--header-height));
+    width: 280px;
+    z-index: var(--z-modal);
+    transition: left 0.3s ease;
+  }
+  
+  .app-sidebar.mobile-open {
+    left: 0;
+  }
+  
+  .main-content {
+    padding: var(--spacing-lg);
+  }
+}
+
+@media (max-width: 480px) {
+  .app-header {
+    padding: 0 var(--spacing-md);
+  }
+  
+  .main-content {
+    padding: var(--spacing-md);
+  }
+  
+  .header-nav {
+    display: none;
+  }
+}
+
+/* Backdrop for mobile sidebar */
+.sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: var(--z-modal-backdrop);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.sidebar-backdrop.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Focus and accessibility */
+.sidebar-nav-link:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Animation for sidebar toggle */
+@keyframes slideInFromLeft {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+.app-sidebar.animate-in {
+  animation: slideInFromLeft 0.3s ease-out;
 }

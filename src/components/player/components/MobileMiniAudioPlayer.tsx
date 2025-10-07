@@ -13,7 +13,7 @@ import {
 const MobileMiniAudioPlayer: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { isDarkMode } = useThemeContext();
+  const { themeMode } = useThemeContext();
   const { currentTrack, isPlaying, currentTime, duration, showMiniPlayer } =
     useAppSelector((state) => state.audio);
 
@@ -49,12 +49,12 @@ const MobileMiniAudioPlayer: React.FC = () => {
         right: 0,
         width: "100%",
         height: 90,
-        background: isDarkMode
+        background: themeMode === 'dark'
           ? "linear-gradient(135deg, rgb(26, 26, 26) 0%, rgba(102, 126, 234, 0.03) 100%)"
           : "linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(102, 126, 234, 0.08) 50%, rgba(255, 107, 107, 0.05) 100%)",
         backdropFilter: "blur(24px)",
-        borderTop: `1px solid ${isDarkMode ? "rgba(255, 255, 255, 0.15)" : "rgba(0, 0, 0, 0.12)"}`,
-        boxShadow: isDarkMode
+        borderTop: `1px solid ${themeMode === 'dark' ? "rgba(255, 255, 255, 0.15)" : "rgba(0, 0, 0, 0.12)"}`,
+        boxShadow: themeMode === 'dark'
           ? "0 -4px 20px rgba(0, 0, 0, 0.3)"
           : "0 -4px 20px rgba(0, 0, 0, 0.1)",
         display: "flex",
@@ -74,13 +74,13 @@ const MobileMiniAudioPlayer: React.FC = () => {
           position: "absolute",
           top: 6,
           right: 8,
-          color: isDarkMode ? "rgba(255, 255, 255, 0.7)" : "rgba(0, 0, 0, 0.7)",
+          color: themeMode === 'dark' ? "rgba(255, 255, 255, 0.7)" : "rgba(0, 0, 0, 0.7)",
           borderRadius: "50%",
           padding: "4px",
           transition: "all 0.2s ease",
           "&:hover": {
-            color: isDarkMode ? "white" : "black",
-            backgroundColor: isDarkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)",
+            color: themeMode === 'dark' ? "white" : "black",
+            backgroundColor: themeMode === 'dark' ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)",
           },
         }}
       >
@@ -106,8 +106,8 @@ const MobileMiniAudioPlayer: React.FC = () => {
             width: 56,
             height: 56,
             borderRadius: "8px",
-            border: `2px solid ${isDarkMode ? "rgba(255, 255, 255, 0.2)" : "rgba(0, 0, 0, 0.12)"}`,
-            boxShadow: isDarkMode ? "0 4px 12px rgba(0, 0, 0, 0.2)" : "0 4px 12px rgba(0, 0, 0, 0.1)",
+            border: `2px solid ${themeMode === 'dark' ? "rgba(255, 255, 255, 0.2)" : "rgba(0, 0, 0, 0.12)"}`,
+            boxShadow: themeMode === 'dark' ? "0 4px 12px rgba(0, 0, 0, 0.2)" : "0 4px 12px rgba(0, 0, 0, 0.1)",
             mr: 2,
           }}
         />
@@ -116,7 +116,7 @@ const MobileMiniAudioPlayer: React.FC = () => {
           <Typography
             variant="body1"
             sx={{
-              color: isDarkMode ? "white" : "black",
+              color: themeMode === 'dark' ? "white" : "black",
               fontWeight: 600,
               fontSize: "12px",
               overflow: "hidden",
@@ -130,7 +130,7 @@ const MobileMiniAudioPlayer: React.FC = () => {
           <Typography
             variant="body2"
             sx={{
-              color: isDarkMode ? "rgba(255, 255, 255, 0.6)" : "rgba(0, 0, 0, 0.6)",
+              color: themeMode === 'dark' ? "rgba(255, 255, 255, 0.6)" : "rgba(0, 0, 0, 0.6)",
               fontSize: "12px",
               overflow: "hidden",
               textOverflow: "ellipsis",
@@ -147,13 +147,13 @@ const MobileMiniAudioPlayer: React.FC = () => {
         <IconButton
           onClick={handleSkipBackward}
           sx={{
-            color: isDarkMode ? "rgba(255, 255, 255, 0.8)" : "rgba(0, 0, 0, 0.8)",
+            color: themeMode === 'dark' ? "rgba(255, 255, 255, 0.8)" : "rgba(0, 0, 0, 0.8)",
             borderRadius: "50%",
             padding: "6px",
             transition: "all 0.2s ease",
             "&:hover": {
-              color: isDarkMode ? "white" : "black",
-              backgroundColor: isDarkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)",
+              color: themeMode === 'dark' ? "white" : "black",
+              backgroundColor: themeMode === 'dark' ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)",
               transform: "scale(1.1)",
             },
           }}
@@ -165,18 +165,18 @@ const MobileMiniAudioPlayer: React.FC = () => {
           onClick={handlePlayPause}
           sx={{
             color: "white",
-            backgroundColor: isDarkMode
+            backgroundColor: themeMode === 'dark'
               ? "linear-gradient(45deg, #ff6b6b, #4ecdc4)"
               : "linear-gradient(45deg, #667eea, #764ba2)",
             borderRadius: "50%",
             padding: "10px",
-            boxShadow: isDarkMode
+            boxShadow: themeMode === 'dark'
               ? "0 4px 20px rgba(255, 107, 107, 0.4)"
               : "0 4px 20px rgba(102, 126, 234, 0.3)",
             transition: "all 0.3s ease",
             "&:hover": {
               transform: "scale(1.1)",
-              boxShadow: isDarkMode
+              boxShadow: themeMode === 'dark'
                 ? "0 6px 30px rgba(255, 107, 107, 0.6)"
                 : "0 6px 30px rgba(102, 126, 234, 0.4)",
             },
@@ -191,13 +191,13 @@ const MobileMiniAudioPlayer: React.FC = () => {
         <IconButton
           onClick={handleSkipForward}
           sx={{
-            color: isDarkMode ? "rgba(255, 255, 255, 0.8)" : "rgba(0, 0, 0, 0.8)",
+            color: themeMode === 'dark' ? "rgba(255, 255, 255, 0.8)" : "rgba(0, 0, 0, 0.8)",
             borderRadius: "50%",
             padding: "6px",
             transition: "all 0.2s ease",
             "&:hover": {
-              color: isDarkMode ? "white" : "black",
-              backgroundColor: isDarkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)",
+              color: themeMode === 'dark' ? "white" : "black",
+              backgroundColor: themeMode === 'dark' ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)",
               transform: "scale(1.1)",
             },
           }}

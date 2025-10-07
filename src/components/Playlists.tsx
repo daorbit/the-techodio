@@ -1,4 +1,3 @@
-import React from "react";
 import { Play, Clock, Heart, Music, Users } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -8,8 +7,6 @@ import {
   CardContent,
   CardMedia,
   IconButton,
-  Select,
-  MenuItem,
   Chip,
   useTheme,
 } from "@mui/material";
@@ -18,9 +15,8 @@ import { SAMPLE_PLAYLISTS } from "../utils/playlistData";
 
 const Playlists = () => {
   const navigate = useNavigate();
-  const { isDarkMode } = useThemeContext();
+  const { themeMode } = useThemeContext();
 
-  const [sortBy, setSortBy] = React.useState("recent");
   const theme = useTheme();
 
   const handlePlaylistClick = (playlistId: string) => {
@@ -45,14 +41,16 @@ const Playlists = () => {
         }}
       >
         <Typography
-          variant="h5"
+          variant="h2"
           sx={{
-            background: isDarkMode
-              ? "linear-gradient(90deg,#00e5ff,#ff9800)"
-              : "none",
-            WebkitBackgroundClip: isDarkMode ? "text" : "initial",
-            WebkitTextFillColor: isDarkMode ? "transparent" : "initial",
-            color: isDarkMode ? "transparent" : "#333",
+            background:
+              themeMode === "dark"
+                ? "linear-gradient(90deg,#00e5ff,#ff9800)"
+                : "none",
+            WebkitBackgroundClip: themeMode === "dark" ? "text" : "initial",
+            WebkitTextFillColor:
+              themeMode === "dark" ? "transparent" : "initial",
+            color: themeMode === "dark" ? "transparent" : "#333",
             fontWeight: "bold",
             [theme.breakpoints.down("sm")]: {
               fontSize: "1.5rem",
@@ -61,30 +59,6 @@ const Playlists = () => {
         >
           {"Playlist"}
         </Typography>
-
-        <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
-          <Select
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-            size="small"
-            sx={{
-              minWidth: 120,
-              background: isDarkMode
-                ? "rgba(255,255,255,0.05)"
-                : "rgba(255,255,255,0.8)",
-              color: isDarkMode ? "#fff" : "#000",
-              "& .MuiOutlinedInput-notchedOutline": {
-                borderColor: isDarkMode
-                  ? "rgba(255,255,255,0.2)"
-                  : "rgba(0,0,0,0.2)",
-              },
-            }}
-          >
-            <MenuItem value="recent">Recently Added</MenuItem>
-            <MenuItem value="name">Name</MenuItem>
-            <MenuItem value="tracks">Track Count</MenuItem>
-          </Select>
-        </Box>
       </Box>
 
       {/* Playlists Grid/List */}
@@ -101,22 +75,26 @@ const Playlists = () => {
             key={playlist.id}
             onClick={() => handlePlaylistClick(playlist.id)}
             sx={{
-              background: isDarkMode
-                ? "linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 100%)"
-                : "linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.85) 100%)",
+              background:
+                themeMode === "dark"
+                  ? "linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 100%)"
+                  : "linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.85) 100%)",
               borderRadius: 4,
               overflow: "hidden",
               backdropFilter: "blur(20px)",
               border: `1px solid ${
-                isDarkMode ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.08)"
+                themeMode === "dark"
+                  ? "rgba(255,255,255,0.1)"
+                  : "rgba(0,0,0,0.08)"
               }`,
               transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
               cursor: "pointer",
               position: "relative",
               "&:hover": {
-                boxShadow: isDarkMode
-                  ? "0 20px 40px rgba(0,229,255,0.15), 0 0 0 1px rgba(0,229,255,0.1)"
-                  : "0 20px 40px rgba(0,0,0,0.12), 0 0 0 1px rgba(25,118,210,0.08)",
+                boxShadow:
+                  themeMode === "dark"
+                    ? "0 20px 40px rgba(0,229,255,0.15), 0 0 0 1px rgba(0,229,255,0.1)"
+                    : "0 20px 40px rgba(0,0,0,0.12), 0 0 0 1px rgba(25,118,210,0.08)",
               },
               "&::before": {
                 content: '""',
@@ -125,9 +103,10 @@ const Playlists = () => {
                 left: 0,
                 right: 0,
                 height: "4px",
-                background: isDarkMode
-                  ? "linear-gradient(90deg, #00e5ff, #ff9800)"
-                  : "linear-gradient(90deg, #1976d2, #42a5f5)",
+                background:
+                  themeMode === "dark"
+                    ? "linear-gradient(90deg, #00e5ff, #ff9800)"
+                    : "linear-gradient(90deg, #1976d2, #42a5f5)",
                 opacity: 0,
                 transition: "opacity 0.3s ease",
               },
@@ -217,7 +196,7 @@ const Playlists = () => {
                 sx={{
                   fontWeight: "bold",
                   mb: 1,
-                  color: isDarkMode ? "#fff" : "#000",
+                  color: themeMode === "dark" ? "#fff" : "#000",
                   overflow: "hidden",
                   textOverflow: "ellipsis",
                   whiteSpace: "nowrap",
@@ -230,9 +209,10 @@ const Playlists = () => {
               <Typography
                 variant="body2"
                 sx={{
-                  color: isDarkMode
-                    ? "rgba(255,255,255,0.7)"
-                    : "rgba(0,0,0,0.6)",
+                  color:
+                    themeMode === "dark"
+                      ? "rgba(255,255,255,0.7)"
+                      : "rgba(0,0,0,0.6)",
                   mb: 2,
                   display: "-webkit-box",
                   WebkitLineClamp: 2,
@@ -256,9 +236,10 @@ const Playlists = () => {
                   <Typography
                     variant="caption"
                     sx={{
-                      color: isDarkMode
-                        ? "rgba(255,255,255,0.5)"
-                        : "rgba(0,0,0,0.5)",
+                      color:
+                        themeMode === "dark"
+                          ? "rgba(255,255,255,0.5)"
+                          : "rgba(0,0,0,0.5)",
                       display: "flex",
                       alignItems: "center",
                       gap: 0.5,
@@ -271,9 +252,10 @@ const Playlists = () => {
                   <Typography
                     variant="caption"
                     sx={{
-                      color: isDarkMode
-                        ? "rgba(255,255,255,0.5)"
-                        : "rgba(0,0,0,0.5)",
+                      color:
+                        themeMode === "dark"
+                          ? "rgba(255,255,255,0.5)"
+                          : "rgba(0,0,0,0.5)",
                       display: "flex",
                       alignItems: "center",
                       gap: 0.5,
@@ -290,9 +272,10 @@ const Playlists = () => {
                     <Users
                       size={16}
                       style={{
-                        color: isDarkMode
-                          ? "rgba(255,255,255,0.5)"
-                          : "rgba(0,0,0,0.5)",
+                        color:
+                          themeMode === "dark"
+                            ? "rgba(255,255,255,0.5)"
+                            : "rgba(0,0,0,0.5)",
                       }}
                     />
                   )}
@@ -303,9 +286,10 @@ const Playlists = () => {
                       // Handle favorite toggle
                     }}
                     sx={{
-                      color: isDarkMode
-                        ? "rgba(255,255,255,0.5)"
-                        : "rgba(0,0,0,0.5)",
+                      color:
+                        themeMode === "dark"
+                          ? "rgba(255,255,255,0.5)"
+                          : "rgba(0,0,0,0.5)",
                       "&:hover": {
                         color: "#ff4081",
                       },
@@ -335,7 +319,10 @@ const Playlists = () => {
           <Typography
             variant="h6"
             sx={{
-              color: isDarkMode ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)",
+              color:
+                themeMode === "dark"
+                  ? "rgba(255,255,255,0.5)"
+                  : "rgba(0,0,0,0.5)",
               mb: 2,
             }}
           >
@@ -344,7 +331,10 @@ const Playlists = () => {
           <Typography
             variant="body2"
             sx={{
-              color: isDarkMode ? "rgba(255,255,255,0.3)" : "rgba(0,0,0,0.3)",
+              color:
+                themeMode === "dark"
+                  ? "rgba(255,255,255,0.3)"
+                  : "rgba(0,0,0,0.3)",
             }}
           >
             Create your first playlist to get started

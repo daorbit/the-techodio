@@ -185,7 +185,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         }}
       >
         <Typography 
-          variant="h5" 
+          variant="h3" 
           sx={{ 
             background: isDarkMode ? "linear-gradient(90deg,#00e5ff,#ff9800)" : "none",
             WebkitBackgroundClip: isDarkMode ? "text" : "initial",
@@ -194,7 +194,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             fontWeight: "bold"
           }}
         >
-          {collapsed ? "" : "Funnel"}
+          {collapsed ? "" : "The Techodio"}
         </Typography>
         <Box
           onClick={() => isMobile ? setDrawerOpen?.(false) : setCollapsed(!collapsed)}

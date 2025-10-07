@@ -46,7 +46,7 @@ interface VideoItem {
 const VideoLibrary = () => {
   const navigate = useNavigate();
   const [view, setView] = React.useState<"grid" | "list">("grid");
-  const { isDarkMode } = useThemeContext();
+  const { themeMode } = useThemeContext();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const iconSize = isMobile ? 18 : 16;
@@ -111,12 +111,12 @@ const VideoLibrary = () => {
           <Typography
             variant="h5"
             sx={{
-              background: isDarkMode
+              background: themeMode === 'dark'
                 ? "linear-gradient(90deg,#00e5ff,#ff9800)"
                 : "none",
-              WebkitBackgroundClip: isDarkMode ? "text" : "initial",
-              WebkitTextFillColor: isDarkMode ? "transparent" : "initial",
-              color: isDarkMode ? "transparent" : "#333",
+              WebkitBackgroundClip: themeMode === 'dark' ? "text" : "initial",
+              WebkitTextFillColor: themeMode === 'dark' ? "transparent" : "initial",
+              color: themeMode === 'dark' ? "transparent" : "#333",
               fontWeight: "bold",
               [theme.breakpoints.down("sm")]: {
                 fontSize: "1.5rem",

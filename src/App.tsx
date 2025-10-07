@@ -24,7 +24,7 @@ function App() {
   const [collapsed, setCollapsed] = useState(false);
   const isMobile = useMediaQuery("(max-width:639px)");
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const { isDarkMode } = useThemeContext();
+  const { themeMode } = useThemeContext();
   const dispatch = useAppDispatch();
   const { currentTrack } = useAppSelector((state) => state.audio);
 
@@ -43,9 +43,12 @@ function App() {
   }, [isPlayerPage, dispatch, currentTrack]);
 
   const rootStyle: React.CSSProperties = {
-    fontFamily: "'Roboto', sans-serif",
+    fontFamily: "'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif",
     minHeight: "100vh",
     width: "100%",
+    backgroundColor: themeMode === 'dark' ? '#0f0f23' : '#f8fafc',
+    color: themeMode === 'dark' ? '#f1f5f9' : '#1e293b',
+    transition: 'all 0.3s ease',
   };
 
   const bodyStyle: React.CSSProperties = {
@@ -55,18 +58,23 @@ function App() {
   };
 
   const headerWrapperStyle: React.CSSProperties = {
-    height: "54px",
+    height: "64px",
     position: "fixed",
     top: 0,
     left: 0,
     right: 0,
     zIndex: 1100,
     background: isMobile
-      ? isDarkMode
-        ? "linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%)"
-        : "linear-gradient(180deg, #4440cc 0%, #3733b3 100%)"
+      ? themeMode === 'dark'
+        ? "linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%)"
+        : "linear-gradient(135deg, #4f46e5 0%, #6366f1 100%)"
       : "transparent",
+    backdropFilter: "blur(10px)",
+    borderBottom: `1px solid ${themeMode === 'dark' ? 'rgba(241, 245, 249, 0.1)' : 'rgba(30, 41, 59, 0.1)'}`,
     display: isMobile && !isPlayerPage ? "block" : "none",
+    boxShadow: themeMode === 'dark' 
+      ? '0 4px 6px -1px rgba(0, 0, 0, 0.3)' 
+      : '0 4px 6px -1px rgba(30, 41, 59, 0.1)',
   };
 
   const contentContainerStyle: React.CSSProperties = {
@@ -92,9 +100,13 @@ function App() {
 
   const contentStyle: React.CSSProperties = {
     flexGrow: 1,
-    padding: isPlayerPage ? "0" : "24px",
+    padding: isPlayerPage ? "0" : "32px",
     overflowX: "hidden" as const,
     overflowY: "auto",
+    background: themeMode === 'dark' 
+      ? "radial-gradient(ellipse at top, #1a1a1a 0%, #0a0a0a 100%)"
+      : "radial-gradient(ellipse at top, #f8fafc 0%, #e2e8f0 100%)",
+    minHeight: "100vh",
   };
 
   return (
