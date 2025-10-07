@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Box,
-  Typography,
-  Card,
-  CardContent,
-  CardMedia,
-} from "@mui/material";
+import { Box, Typography, Card, CardContent, CardMedia } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Clock, Eye } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -48,7 +42,8 @@ const trendingData = [
     id: "3",
     category: "AI/ML",
     image: "/assets/ml.png",
-    audio: "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
+    audio:
+      "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
     title: "Machine Learning Basics",
     author: "Sarah Chen",
     duration: "3:30",
@@ -125,6 +120,10 @@ const PillTab = styled("button")<{
   cursor: "pointer",
   boxShadow: $active ? "0 2px 8px rgba(0,229,255,0.2)" : "none",
   transition: "all 0.2s",
+  "&:hover": {
+    border: $active ? "2px solid #00e5ff" : "1px solid #e0e0e0",
+    background: $active ? "rgba(0,229,255,0.1)" : "#fff",
+  },
 }));
 
 const Title = styled(Typography)(({ theme }) => ({
@@ -185,16 +184,10 @@ export default function TrendingNow() {
     <SectionWrapper>
       {/* Header and Tabs in one row */}
       <HeaderRow>
-        <Title variant="h5">
-          Trending Now
-        </Title>
+        <Title variant="h5">Trending Now</Title>
         <TabsWrapper>
           {topics.map((topic, i) => (
-            <PillTab
-              key={i}
-              $active={tab === i}
-              onClick={() => setTab(i)}
-            >
+            <PillTab key={i} $active={tab === i} onClick={() => setTab(i)}>
               {topic}
             </PillTab>
           ))}
@@ -204,7 +197,16 @@ export default function TrendingNow() {
       {/* Cards */}
       <CardGrid>
         {filteredCards.map((card, i) => (
-          <StyledCard key={i} onClick={() => navigate(card.type === "audio" ? `/audio-player/${card.id}` : `/video-player/${card.id}`)}>
+          <StyledCard
+            key={i}
+            onClick={() =>
+              navigate(
+                card.type === "audio"
+                  ? `/audio-player/${card.id}`
+                  : `/video-player/${card.id}`
+              )
+            }
+          >
             {/* Image */}
             <CardMedia
               component="img"
@@ -217,7 +219,8 @@ export default function TrendingNow() {
             {/* Overlay */}
             <OverlayContent>
               <Typography variant="body2" color="lightgray">
-                {card.type.charAt(0).toUpperCase() + card.type.slice(1)} - {card.category}
+                {card.type.charAt(0).toUpperCase() + card.type.slice(1)} -{" "}
+                {card.category}
               </Typography>
               <Typography variant="h6" sx={{ fontWeight: "bold" }}>
                 {card.title}
