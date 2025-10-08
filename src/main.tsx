@@ -7,7 +7,7 @@ import { AppThemeProvider } from './contexts/ThemeContext';
 import { store } from './store/store';
 import './index.css';
 import App from './App.tsx';
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/react"
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
