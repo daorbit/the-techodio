@@ -74,7 +74,7 @@ export default function NeuralNetworksHero() {
               mb: 1,
             }}
           >
-            Welcome to Funnel
+            Welcome to The Techodio!
           </Typography>
           <Typography 
             variant="body1" 

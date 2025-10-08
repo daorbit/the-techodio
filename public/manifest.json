@@ -1,6 +1,6 @@
 {
   "name": "The Techodio",
-  "short_name": "Funnel Effect",
+  "short_name": "Techodio",
   "description": "Discover and listen to the latest podcasts with our intuitive audio and video player.",
   "start_url": "/",
   "display": "standalone",
