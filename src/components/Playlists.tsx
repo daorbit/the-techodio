@@ -9,15 +9,35 @@ import {
   IconButton,
   Chip,
   useTheme,
+  CircularProgress,
 } from "@mui/material";
 import { useThemeContext } from "../hooks/useThemeContext";
-import { SAMPLE_PLAYLISTS } from "../utils/playlistData";
+import { usePlaylists } from "../hooks/usePlaylists";
 
 const Playlists = () => {
   const navigate = useNavigate();
   const { themeMode } = useThemeContext();
+  const { playlists, loading, error } = usePlaylists();
 
   const theme = useTheme();
+
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: themeMode === "dark"
+            ? "linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%)"
+            : "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
+        }}
+      >
+        <CircularProgress size={60} />
+      </Box>
+    );
+  }
 
   const handlePlaylistClick = (playlistId: string) => {
     navigate(`/playlists/${playlistId}`);
@@ -70,7 +90,12 @@ const Playlists = () => {
           gap: 3,
         }}
       >
-        {SAMPLE_PLAYLISTS.map((playlist) => (
+        {error ? (
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
+            <Typography color="error">Error: {error}</Typography>
+          </Box>
+        ) : (
+          playlists.map((playlist) => (
           <Box
             key={playlist.id}
             onClick={() => handlePlaylistClick(playlist.id)}
@@ -302,22 +327,21 @@ const Playlists = () => {
               </Box>
             </CardContent>
           </Box>
-        ))}
-      </Box>
+        )))}
 
-      {SAMPLE_PLAYLISTS.length === 0 && (
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            minHeight: "400px",
-            textAlign: "center",
-          }}
-        >
-          <Typography
-            variant="h6"
+        {playlists.length === 0 && !loading && !error && (
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              minHeight: "400px",
+              textAlign: "center",
+            }}
+          >
+            <Typography
+              variant="h6"
             sx={{
               color:
                 themeMode === "dark"
@@ -342,6 +366,7 @@ const Playlists = () => {
         </Box>
       )}
     </Box>
+  </Box>
   );
 };
 

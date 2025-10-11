@@ -13,10 +13,12 @@ import {
   ListItemAvatar,
   ListItemText,
   ListItemSecondaryAction,
+  CircularProgress,
 } from "@mui/material";
 import { ArrowLeft, Play, Pause, Clock, Music, Users } from "lucide-react";
 import { useThemeContext } from "../hooks/useThemeContext";
-import { getPlaylistById, type Track } from "../utils/playlistData";
+import { usePlaylist } from "../hooks/usePlaylists";
+import type { Track } from "../utils/playlistData";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import {
   setCurrentTrack,
@@ -35,7 +37,43 @@ const PlaylistDetail = () => {
   const currentTrack = useAppSelector((state) => state.audio.currentTrack);
   const isPlaying = useAppSelector((state) => state.audio.isPlaying);
 
-  const playlist = id ? getPlaylistById(id) : null;
+  const { playlist, loading, error } = usePlaylist(id);
+
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: themeMode === 'dark'
+            ? "linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%)"
+            : "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
+        }}
+      >
+        <CircularProgress size={60} />
+      </Box>
+    );
+  }
+
+  if (error) {
+    return (
+      <Box
+        sx={{
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: themeMode === 'dark'
+            ? "linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%)"
+            : "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
+        }}
+      >
+        <Typography color="error">Error: {error}</Typography>
+      </Box>
+    );
+  }
 
   if (!playlist) {
     return (

@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import audioReducer from './audioSlice';
+import playlistsReducer from './playlistsSlice';
 
 export const store = configureStore({
   reducer: {
     audio: audioReducer,
+    playlists: playlistsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
