@@ -19,7 +19,7 @@ import {
   PanelLeftOpen,
   PanelLeftClose,
   Music,
-  Video,
+  // Video,
   Sun,
   Moon,
   ListMusic,
@@ -78,7 +78,7 @@ const NAV_ITEMS = [
   { text: "Home", icon: <Home size={18} />, path: "/" },
   // { text: "Dashboard", icon: <LayoutList size={18} />, path: "/dashboard" },
   { text: "Audio Library", icon: <Music size={18} />, path: "/audio-library" },
-  { text: "Video Library", icon: <Video size={18} />, path: "/video-library" },
+  // { text: "Video Library", icon: <Video size={18} />, path: "/video-library" },
   { text: "Playlists", icon: <ListMusic size={18} />, path: "/playlists" },
 ];
 
