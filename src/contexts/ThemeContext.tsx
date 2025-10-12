@@ -21,8 +21,8 @@ interface AppThemeProviderProps {
 export const AppThemeProvider: React.FC<AppThemeProviderProps> = ({ children }) => {
   const [themeMode, setThemeMode] = useState<'light' | 'dark'>(() => {
     // Check localStorage for saved theme preference
-    const saved = localStorage.getItem('theme');
-    return saved ? JSON.parse(saved) : 'light';
+    const saved = localStorage.getItem('techodio-theme');
+    return saved ? JSON.parse(saved) : 'dark';
   });
 
   const toggleTheme = () => {
@@ -31,7 +31,7 @@ export const AppThemeProvider: React.FC<AppThemeProviderProps> = ({ children }) 
 
   // Save theme preference to localStorage
   useEffect(() => {
-    localStorage.setItem('theme', JSON.stringify(themeMode));
+    localStorage.setItem('techodio-theme', JSON.stringify(themeMode));
     // Apply theme to document root
     document.documentElement.setAttribute('data-theme', themeMode);
   }, [themeMode]);

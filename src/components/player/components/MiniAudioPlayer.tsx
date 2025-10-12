@@ -1,5 +1,13 @@
 import React from "react";
-import { Box, IconButton, Typography, Avatar, Slider, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  Typography,
+  Avatar,
+  Slider,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { Play, Pause, SkipBack, SkipForward, Maximize2, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../../store/hooks";
@@ -17,7 +25,7 @@ const MiniAudioPlayer: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const { isDarkMode } = useThemeContext();
   const { currentTrack, isPlaying, currentTime, duration, showMiniPlayer } =
     useAppSelector((state) => state.audio);
@@ -66,121 +74,108 @@ const MiniAudioPlayer: React.FC = () => {
         position: "fixed",
         top: position.y,
         left: position.x,
-        width: 360,
+        width: 340,
         background: isDarkMode
-          ? "linear-gradient(135deg, rgb(26, 26, 26) 0%, rgba(102, 126, 234, 0.03) 100%)"
-          : "linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(102, 126, 234, 0.08) 50%, rgba(255, 107, 107, 0.05) 100%)",
-        backdropFilter: "blur(24px)",
-        borderRadius: "20px",
-        border: `1px solid ${isDarkMode ? "rgba(255, 255, 255, 0.15)" : "rgba(0, 0, 0, 0.12)"}`,
+          ? "rgba(30, 30, 30, 0.85)"
+          : "rgba(255, 255, 255, 0.85)",
+        backdropFilter: "blur(18px)",
+        borderRadius: "18px",
+        border: `1px solid ${
+          isDarkMode ? "rgba(255,255,255,0.10)" : "rgba(0,0,0,0.10)"
+        }`,
         boxShadow: isDarkMode
-          ? "0 25px 80px rgba(0, 0, 0, 0.6), 0 0 40px rgba(255, 255, 255, 0.1)"
-          : "0 25px 80px rgba(0, 0, 0, 0.2), 0 0 40px rgba(0, 0, 0, 0.05)",
+          ? "0 8px 32px rgba(0,0,0,0.7)"
+          : "0 8px 32px rgba(0,0,0,0.2)",
         display: "flex",
         flexDirection: "column",
-        padding: "20px",
+        padding: "18px 18px 10px 18px",
         zIndex: 1200,
         cursor: isDragging ? "grabbing" : "grab",
-        transition: isDragging ? "none" : "all 0.3s ease-in-out",
-        "&:hover": {
-          transform: isDragging ? "none" : "translateY(-2px)",
-          boxShadow: isDarkMode
-            ? "0 30px 100px rgba(0, 0, 0, 0.7), 0 0 50px rgba(255, 255, 255, 0.15)"
-            : "0 30px 100px rgba(0, 0, 0, 0.3), 0 0 50px rgba(0, 0, 0, 0.08)",
-        },
+        transition: isDragging ? "none" : "all 0.3s",
       }}
     >
       <Box
         sx={{
           display: "flex",
-          justifyContent: "space-between",
           alignItems: "center",
-          mb: 2,
+          justifyContent: "space-between",
+          mb: 1,
         }}
       >
-        <Typography
-          variant="caption"
-          sx={{
-            color: isDarkMode ? "rgba(255, 255, 255, 0.8)" : "rgba(0, 0, 0, 0.8)",
-            fontWeight: 600,
-            fontSize: "12px",
-          }}
-        >
-          NOW PLAYING
-        </Typography>
-        <Box sx={{ display: "flex", gap: 1 }}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: 12,
+            }}
+          >
+            Mini Player
+          </Box>
+        </Box>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <IconButton
+            size="small"
             onClick={() => {
               navigate(`/audio-player/${currentTrack.id}`);
               dispatch(setShowMiniPlayer(false));
             }}
-            sx={{
-              color: isDarkMode ? "rgba(255, 255, 255, 0.7)" : "rgba(0, 0, 0, 0.7)",
-              borderRadius: "50%",
-              padding: "6px",
-              transition: "all 0.2s ease",
-              "&:hover": {
-                color: isDarkMode ? "white" : "black",
-                backgroundColor: isDarkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)",
-              },
-            }}
+            sx={{ color: isDarkMode ? "#fff" : "#222" }}
           >
             <Maximize2 size={16} />
           </IconButton>
+          {/* Close */}
           <IconButton
+            size="small"
             onClick={() => {
-               localStorage.removeItem('miniPlayerPosition');
+              localStorage.removeItem("miniPlayerPosition");
               dispatch(resetAllAudioState());
             }}
-            sx={{
-              color: isDarkMode ? "rgba(255, 255, 255, 0.7)" : "rgba(0, 0, 0, 0.7)",
-              borderRadius: "50%",
-              padding: "6px",
-              transition: "all 0.2s ease",
-              "&:hover": {
-                color: isDarkMode ? "white" : "black",
-                backgroundColor: isDarkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)",
-              },
-            }}
+            sx={{ color: isDarkMode ? "#fff" : "#222" }}
           >
             <X size={16} />
           </IconButton>
         </Box>
       </Box>
 
-      <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
+      <Box sx={{ display: "flex", gap: 2, alignItems: "center", mb: 1, mt: 2 }}>
         <Avatar
           src={currentTrack.thumbnail}
           alt={currentTrack.title}
           sx={{
-            width: 120,
-            height: 120,
-            borderRadius: "16px",
-            border: `3px solid ${isDarkMode ? "rgba(255, 255, 255, 0.2)" : "rgba(0, 0, 0, 0.12)"}`,
-            boxShadow: isDarkMode ? "0 8px 32px rgba(0, 0, 0, 0.3)" : "0 8px 32px rgba(0, 0, 0, 0.1)",
-            transition: "transform 0.3s ease",
-            "&:hover": {
-              transform: "scale(1.05)",
-            },
+            width: 56,
+            height: 56,
+            borderRadius: "10px",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.18)",
           }}
         />
-      </Box>
-
-      <Box sx={{ textAlign: "center", mb: 2 }}>
-        <Typography
-          variant="body1"
-          sx={{
-            color: isDarkMode ? "white" : "black",
-            fontWeight: 600,
-            fontSize: "16px",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            whiteSpace: "nowrap",
-            mb: 0.5,
-          }}
-        >
-          {currentTrack.title}
-        </Typography>
+        <Box sx={{ flex: 1, overflow: "hidden" }}>
+          <Typography
+            variant="subtitle1"
+            sx={{
+              color: isDarkMode ? "#fff" : "#222",
+              fontWeight: 600,
+              fontSize: "16px",
+              // lineHeight: 1.1,
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
+            {currentTrack.title}
+          </Typography>
+          <Typography
+            variant="body2"
+            sx={{
+              color: isDarkMode ? "#b3b3b3" : "#555",
+              fontSize: "13px",
+              fontWeight: 500,
+            }}
+          >
+            By: {currentTrack.author || "Unknown Artist"}
+          </Typography>
+        </Box>
       </Box>
 
       <Box
@@ -188,85 +183,55 @@ const MiniAudioPlayer: React.FC = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          mb: 2,
+          gap: 2,
+          mb: 1,
         }}
       >
-        <Box
+        <IconButton
+          onClick={handleSkipBackward}
           sx={{
-            display: "flex",
-            gap: 1,
-            alignItems: "center",
-            justifyContent: "center",
+            color: isDarkMode ? "#fff" : "#222",
+            background: "none",
+            borderRadius: "50%",
+            p: 1,
           }}
         >
-          <IconButton
-            onClick={handleSkipBackward}
-            sx={{
-              color: isDarkMode ? "rgba(255, 255, 255, 0.8)" : "rgba(0, 0, 0, 0.8)",
-              borderRadius: "50%",
-              padding: "8px",
-              transition: "all 0.2s ease",
-              "&:hover": {
-                color: isDarkMode ? "white" : "black",
-                backgroundColor: isDarkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)",
-                transform: "scale(1.1)",
-              },
-            }}
-          >
-            <SkipBack size={20} />
-          </IconButton>
-          <IconButton
-            onClick={handlePlayPause}
-            sx={{
-              color: "white",
-              backgroundColor: isDarkMode
-                ? "linear-gradient(45deg, #ff6b6b, #4ecdc4)"
-                : "linear-gradient(45deg, #667eea, #764ba2)",
-              borderRadius: "50%",
-              padding: "12px",
-              boxShadow: isDarkMode
-                ? "0 4px 20px rgba(255, 107, 107, 0.4)"
-                : "0 4px 20px rgba(102, 126, 234, 0.3)",
-              transition: "all 0.3s ease",
-              "&:hover": {
-                transform: "scale(1.1)",
-                boxShadow: isDarkMode
-                  ? "0 6px 30px rgba(255, 107, 107, 0.6)"
-                  : "0 6px 30px rgba(102, 126, 234, 0.4)",
-              },
-              "&:active": {
-                transform: "scale(0.95)",
-              },
-            }}
-          >
-            {isPlaying ? <Pause size={24} /> : <Play size={24} />}
-          </IconButton>
-          <IconButton
-            onClick={handleSkipForward}
-            sx={{
-              color: isDarkMode ? "rgba(255, 255, 255, 0.8)" : "rgba(0, 0, 0, 0.8)",
-              borderRadius: "50%",
-              padding: "8px",
-              transition: "all 0.2s ease",
-              "&:hover": {
-                color: isDarkMode ? "white" : "black",
-                backgroundColor: isDarkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)",
-                transform: "scale(1.1)",
-              },
-            }}
-          >
-            <SkipForward size={20} />
-          </IconButton>
-        </Box>
+          <SkipBack size={22} />
+        </IconButton>
+        <IconButton
+          onClick={handlePlayPause}
+          sx={{
+            color: "#fff",
+            background: "linear-gradient(90deg,#1db954 60%,#1ed760 100%)",
+            borderRadius: "50%",
+            p: 2,
+            boxShadow: "0 2px 8px #1db95455",
+          }}
+        >
+          {isPlaying ? <Pause size={28} /> : <Play size={28} />}
+        </IconButton>
+        <IconButton
+          onClick={handleSkipForward}
+          sx={{
+            color: isDarkMode ? "#fff" : "#222",
+            background: "none",
+            borderRadius: "50%",
+            p: 1,
+          }}
+        >
+          <SkipForward size={22} />
+        </IconButton>
       </Box>
 
-      <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1, mb: 2 }}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1, mb: 0 }}>
         <Typography
           variant="caption"
           sx={{
-            color: isDarkMode ? "rgba(255, 255, 255, 0.8)" : "rgba(0, 0, 0, 0.8)",
+            color: isDarkMode ? "#b3b3b3" : "#888",
             fontSize: "12px",
             fontFamily: "monospace",
+            minWidth: 36,
+            textAlign: "center",
           }}
         >
           {formatTime(currentTime)}
@@ -279,24 +244,21 @@ const MiniAudioPlayer: React.FC = () => {
           }
           sx={{
             flex: 1,
-            color: isDarkMode ? "#fff" : "#000",
+            color: "#1db954",
             height: 4,
             "& .MuiSlider-thumb": {
               width: 12,
               height: 12,
-              backgroundColor: isDarkMode ? "#fff" : "#000",
-              border: `2px solid ${isDarkMode ? "rgba(255, 255, 255, 0.3)" : "rgba(0, 0, 0, 0.3)"}`,
-              boxShadow: isDarkMode ? "0 2px 10px rgba(0, 0, 0, 0.2)" : "0 2px 10px rgba(0, 0, 0, 0.1)",
-              "&:hover": {
-                boxShadow: isDarkMode ? "0 4px 20px rgba(0, 0, 0, 0.3)" : "0 4px 20px rgba(0, 0, 0, 0.2)",
-              },
+              backgroundColor: "#1db954",
+              border: "2px solid #fff",
+              boxShadow: "0 2px 8px #1db95455",
             },
             "& .MuiSlider-track": {
-              backgroundColor: isDarkMode ? "#fff" : "#000",
+              backgroundColor: "#1db954",
               height: 4,
             },
             "& .MuiSlider-rail": {
-              backgroundColor: isDarkMode ? "rgba(255, 255, 255, 0.3)" : "rgba(0, 0, 0, 0.3)",
+              backgroundColor: isDarkMode ? "#444" : "#ddd",
               height: 4,
             },
           }}
@@ -304,9 +266,11 @@ const MiniAudioPlayer: React.FC = () => {
         <Typography
           variant="caption"
           sx={{
-            color: isDarkMode ? "rgba(255, 255, 255, 0.8)" : "rgba(0, 0, 0, 0.8)",
+            color: isDarkMode ? "#b3b3b3" : "#888",
             fontSize: "12px",
             fontFamily: "monospace",
+            minWidth: 36,
+            textAlign: "center",
           }}
         >
           {formatTime(duration)}
