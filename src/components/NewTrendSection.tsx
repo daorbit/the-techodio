@@ -73,21 +73,11 @@ const trendingData = [
     views: "5.1M",
     type: "video",
   },
-  {
-    id: "3",
-    category: "CSS",
-    image: "https://img.youtube.com/vi/0-DYpTmF7Dk/0.jpg",
-    youtubeId: "0-DYpTmF7Dk",
-    title: "CSS Grid Tutorial",
-    author: "Kevin Powell",
-    duration: "45:22",
-    views: "1.8M",
-    type: "video",
-  },
 ];
 
 // Styled Components
 const SectionWrapper = styled(Box)(({ theme }) => ({
+  // backgroundColor: theme.palette.background.default,
   paddingTop: theme.spacing(4),
 }));
 
@@ -108,30 +98,35 @@ const TabsWrapper = styled(Box)(({ theme }) => ({
 
 const PillTab = styled("button")<{
   $active?: boolean;
-}>(({ $active }) => ({
-  border: $active ? "2px solid #00e5ff" : "1px solid #e0e0e0",
+}>(({ $active, theme }) => ({
+  border: $active
+    ? `2px solid ${theme.palette.primary.main}`
+    : `1px solid ${theme.palette.divider}`,
   outline: "none",
-  background: $active ? "rgba(0,229,255,0.1)" : "#fff",
-  color: $active ? "#00e5ff" : "#333",
+  background: $active
+    ? theme.palette.action.selected
+    : theme.palette.background.paper,
+  color: $active ? theme.palette.primary.main : theme.palette.text.primary,
   padding: "7px 18px",
   borderRadius: "8px",
   fontWeight: 500,
   fontSize: "1rem",
   cursor: "pointer",
-  boxShadow: $active ? "0 2px 8px rgba(0,229,255,0.2)" : "none",
+  boxShadow: $active ? `0 2px 8px ${theme.palette.primary.main}40` : "none",
   transition: "all 0.2s",
   "&:hover": {
-    border: $active ? "2px solid #00e5ff" : "1px solid #e0e0e0",
-    background: $active ? "rgba(0,229,255,0.1)" : "#fff",
+    border: $active
+      ? `2px solid ${theme.palette.primary.main}`
+      : `1px solid ${theme.palette.divider}`,
+    background: $active
+      ? theme.palette.action.selected
+      : theme.palette.action.hover,
   },
 }));
 
 const Title = styled(Typography)(({ theme }) => ({
   fontWeight: "bold",
   marginBottom: theme.spacing(2),
-  background: "linear-gradient(90deg,#00e5ff,#ff9800)",
-  WebkitBackgroundClip: "text",
-  WebkitTextFillColor: "transparent",
 }));
 
 const CardGrid = styled(Box)(({ theme }) => ({
@@ -149,14 +144,19 @@ const CardGrid = styled(Box)(({ theme }) => ({
   },
 }));
 
-const StyledCard = styled(Card)(() => ({
+const StyledCard = styled(Card)(({ theme }) => ({
   borderRadius: "16px",
   overflow: "hidden",
   position: "relative",
-  boxShadow: "0px 4px 12px rgba(0,0,0,0.1)",
+  backgroundColor: theme.palette.background.paper,
+  boxShadow: `0px 4px 12px ${
+    theme.palette.mode === "dark" ? "rgba(0,0,0,0.5)" : "rgba(0,0,0,0.1)"
+  }`,
   transition: "all 0.3s ease",
   "&:hover": {
-    boxShadow: "0px 8px 20px rgba(0,0,0,0.2)",
+    boxShadow: `0px 8px 20px ${
+      theme.palette.mode === "dark" ? "rgba(0,0,0,0.7)" : "rgba(0,0,0,0.2)"
+    }`,
     transform: "scale(1.01)",
   },
 }));

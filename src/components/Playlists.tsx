@@ -29,9 +29,7 @@ const Playlists = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: themeMode === "dark"
-            ? "linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%)"
-            : "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
+          
         }}
       >
         <CircularProgress size={60} />
@@ -61,7 +59,7 @@ const Playlists = () => {
         }}
       >
         <Typography
-          variant="h2"
+          variant="h4"
           sx={{
             background:
               themeMode === "dark"

@@ -154,7 +154,7 @@ const AudioLibrary = () => {
     <SectionContainer>
       <ContentHeader>
         <Typography
-          variant="h2"
+          variant="h4"
           fontWeight="bold"
           sx={{
             background: isDarkMode
