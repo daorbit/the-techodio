@@ -50,6 +50,7 @@ const playlistsSlice = createSlice({
       .addCase(fetchPlaylistsAsync.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+        state.loaded = true;
       });
   },
 });
