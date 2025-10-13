@@ -188,7 +188,10 @@ const AISuggestions: React.FC = () => {
             </Box>
             <IconButton
               size="small"
-              onClick={() => setShowSuggestions(false)}
+              onClick={() => {
+                setSuggestions([]);
+                setShowSuggestions(false);
+              }}
               sx={{
                 color: isDarkMode ? "#666" : "#999",
                 "&:hover": {
