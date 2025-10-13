@@ -105,13 +105,13 @@ const AISuggestions: React.FC = () => {
           right: 24,
           zIndex: 1000,
           background: loading
-            ? "rgba(0,229,255,0.7)"
-            : "linear-gradient(135deg, #00e5ff 0%, #1976d2 50%, #ff6b6b 100%)",
+            ? "linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(52, 211, 153, 0.3))"
+            : "linear-gradient(135deg, rgba(6, 95, 70, 0.4), rgba(16, 185, 129, 0.4), rgba(52, 211, 153, 0.4))",
           color: "#fff",
           "&:hover": {
             background: loading
-              ? "rgba(0,229,255,0.7)"
-              : "linear-gradient(135deg, #00e5ff 0%, #4ecdc4 50%, #f093fb 100%)",
+              ? "linear-gradient(135deg, rgba(16, 185, 129, 0.4), rgba(52, 211, 153, 0.4))"
+              : "linear-gradient(135deg, rgba(4, 120, 87, 0.5), rgba(5, 150, 105, 0.5), rgba(16, 185, 129, 0.5))",
             animation: loading ? "none" : "pulse 0.6s ease-in-out",
           },
           boxShadow: "0 4px 20px rgba(0,229,255,0.3)",
@@ -122,15 +122,10 @@ const AISuggestions: React.FC = () => {
         aria-label="AI Suggestions"
       >
         {loading ? (
-          <Box
-            sx={{
-              width: 24,
-              height: 24,
-              border: "2px solid rgba(255,255,255,0.3)",
-              borderTop: "2px solid #fff",
-              borderRadius: "50%",
-              animation: "spin 1s linear infinite",
-            }}
+          <Lottie
+            animationData={audioSearchingAnimation}
+            loop={true}
+            style={{ width: 26, height: 26 }}
           />
         ) : showSuggestions ? (
           <X size={24} />
