@@ -26,7 +26,6 @@ import {
 } from "lucide-react";
 
 import { useThemeContext } from "../../hooks/useThemeContext";
-import AISuggestions from "../AISuggestions";
 
 interface SidebarProps {
   collapsed?: boolean;
@@ -237,10 +236,6 @@ const Sidebar: React.FC<SidebarProps> = ({
           </ListItem>
         ))}
       </List>
-
-      {/* AI Suggestions */}
-      {!collapsed && (
-      <AISuggestions collapsed={collapsed} />)}
 
       {/* Theme Toggle - only show on desktop */}
       {!isMobile && (

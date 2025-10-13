@@ -18,6 +18,7 @@ import { setShowMiniPlayer } from "./store/audioSlice";
 import { useGlobalAudioPlayer } from "./hooks/useGlobalAudioPlayer";
 import { useAppSelector } from "./store/hooks";
 import NeuralNetworksHero from "./components/Home";
+import AISuggestions from "./components/AISuggestions";
 
 function App() {
   const location = useLocation();
@@ -154,6 +155,9 @@ function App() {
 
         {/* Mini Audio Player */}
         <MiniAudioPlayer />
+
+        {/* AI Suggestions Floating Button */}
+        <AISuggestions />
       </div>
     </>
   );
