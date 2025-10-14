@@ -110,23 +110,23 @@ const AISuggestions: React.FC = () => {
           zIndex: 1000,
           background: loading
             ? "linear-gradient(135deg, rgba(16, 185, 129, 0.5), rgba(52, 211, 153, 0.5))"
-            : "linear-gradient(135deg, #00ff88, #4caf50, #66bb6a)",
+            : "linear-gradient(135deg, rgba(0,255,136,0.1), rgba(30,30,30,0.9))",
           color: "#fff",
           "&:hover": {
             background: loading
               ? "linear-gradient(135deg, rgba(16, 185, 129, 0.6), rgba(52, 211, 153, 0.6))"
-              : "linear-gradient(135deg, #00e676, #388e3c, #43a047)",
+              : "linear-gradient(135deg, #00e676, #00aa55)",
             animation: loading ? "none" : "pulse 0.6s ease-in-out infinite",
-            transform: "scale(1.1)",
           },
           "&:not(:hover)": {
             animation: loading ? "none" : "sparkle 2s ease-in-out infinite",
           },
-          boxShadow: "0 8px 32px rgba(0,255,136,0.4), 0 0 0 1px rgba(255,255,255,0.1)",
+          boxShadow:
+            "0 4px 16px rgba(0,255,136,0.4), 0 0 0 1px rgba(255,255,255,0.1)",
           width: 64,
           height: 64,
           transition: "all 0.3s ease",
-          border: "2px solid rgba(255,255,255,0.2)",
+          border: "1px solid rgba(255,255,255,0.2)",
         }}
         aria-label="AI Suggestions"
       >
@@ -157,7 +157,8 @@ const AISuggestions: React.FC = () => {
               : "rgba(255,255,255,0.98)",
             backdropFilter: "blur(20px)",
             borderRadius: 4,
-            boxShadow: "0 25px 50px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.1)",
+            boxShadow:
+              "0 25px 50px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.1)",
             border: `1px solid ${
               isDarkMode ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.15)"
             }`,
@@ -183,7 +184,8 @@ const AISuggestions: React.FC = () => {
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-               <Typography
+              <Sparkles size={24} color="#00ff88" />
+              <Typography
                 variant="h6"
                 sx={{
                   fontSize: "1.1rem",
@@ -280,11 +282,15 @@ const AISuggestions: React.FC = () => {
                           backgroundColor: isDarkMode
                             ? "rgba(255,255,255,0.1)"
                             : "rgba(0,0,0,0.05)",
-                           boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+                          boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
                         },
                         transition: "all 0.3s ease",
                         border: isCurrentTrack
-                          ? `1px solid ${isDarkMode ? "rgba(0,255,136,0.3)" : "rgba(76,175,80,0.3)"}`
+                          ? `1px solid ${
+                              isDarkMode
+                                ? "rgba(0,255,136,0.3)"
+                                : "rgba(76,175,80,0.3)"
+                            }`
                           : "none",
                         animation: `slideIn 0.5s ease-out ${index * 0.1}s both`,
                       }}
