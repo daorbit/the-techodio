@@ -43,6 +43,11 @@ function App() {
     }
   }, [isPlayerPage, dispatch, currentTrack]);
 
+  // Scroll to top when route changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   const rootStyle: React.CSSProperties = {
     fontFamily: "'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif",
     minHeight: "100vh",
