@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Typography, IconButton, Fab } from "@mui/material";
+import { Box, Typography, IconButton, Fab, Tooltip } from "@mui/material";
 import { Sparkles, Play, Pause, X } from "lucide-react";
 import { useThemeContext } from "../hooks/useThemeContext";
 import { getTrackSuggestions } from "../services/geminiService";
@@ -100,48 +100,50 @@ const AISuggestions: React.FC = () => {
   return (
     <>
       {/* Floating Action Button */}
-      <Fab
-        onClick={handleButtonClick}
-        disabled={loading}
-        sx={{
-          position: "fixed",
-          bottom: 24,
-          right: 24,
-          zIndex: 1000,
-          background: loading
-            ? "linear-gradient(135deg, rgba(16, 185, 129, 0.5), rgba(52, 211, 153, 0.5))"
-            : "linear-gradient(135deg, rgba(0,255,136,0.1), rgba(30,30,30,0.9))",
-          color: "#fff",
-          "&:hover": {
+      <Tooltip title="AI Suggestions" placement="left">
+        <Fab
+          onClick={handleButtonClick}
+          disabled={loading}
+          sx={{
+            position: "fixed",
+            bottom: 24,
+            right: 24,
+            zIndex: 1000,
             background: loading
-              ? "linear-gradient(135deg, rgba(16, 185, 129, 0.6), rgba(52, 211, 153, 0.6))"
-              : "linear-gradient(135deg, #00e676, #00aa55)",
-            animation: loading ? "none" : "pulse 0.6s ease-in-out infinite",
-          },
-          "&:not(:hover)": {
-            animation: loading ? "none" : "sparkle 2s ease-in-out infinite",
-          },
-          boxShadow:
-            "0 4px 16px rgba(0,255,136,0.4), 0 0 0 1px rgba(255,255,255,0.1)",
-          width: 64,
-          height: 64,
-          transition: "all 0.3s ease",
-          border: "1px solid rgba(255,255,255,0.2)",
-        }}
-        aria-label="AI Suggestions"
-      >
-        {loading ? (
-          <Lottie
-            animationData={audioSearchingAnimation}
-            loop={true}
-            style={{ width: 26, height: 26 }}
-          />
-        ) : showSuggestions ? (
-          <X size={24} />
-        ) : (
-          <Sparkles size={24} />
-        )}
-      </Fab>
+              ? "linear-gradient(135deg, rgba(16, 185, 129, 0.5), rgba(52, 211, 153, 0.5))"
+              : "linear-gradient(135deg, rgba(0,255,136,0.1), rgba(30,30,30,0.9))",
+            color: "#fff",
+            "&:hover": {
+              background: loading
+                ? "linear-gradient(135deg, rgba(16, 185, 129, 0.6), rgba(52, 211, 153, 0.6))"
+                : "linear-gradient(135deg, #00e676, #00aa55)",
+              animation: loading ? "none" : "pulse 0.6s ease-in-out infinite",
+            },
+            "&:not(:hover)": {
+              animation: loading ? "none" : "sparkle 2s ease-in-out infinite",
+            },
+            boxShadow:
+              "0 4px 16px rgba(0,255,136,0.4), 0 0 0 1px rgba(255,255,255,0.1)",
+            width: 64,
+            height: 64,
+            transition: "all 0.3s ease",
+            border: "1px solid rgba(255,255,255,0.2)",
+          }}
+          aria-label="AI Suggestions"
+        >
+          {loading ? (
+            <Lottie
+              animationData={audioSearchingAnimation}
+              loop={true}
+              style={{ width: 26, height: 26 }}
+            />
+          ) : showSuggestions ? (
+            <X size={24} />
+          ) : (
+            <Sparkles size={24} />
+          )}
+        </Fab>
+      </Tooltip>
 
       {/* Suggestions Panel */}
       {showSuggestions && (
