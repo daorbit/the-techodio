@@ -1,7 +1,14 @@
 import React from "react";
-import { Box, Typography, Card, CardContent, CardMedia } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import { Clock, Eye } from "lucide-react";
+import {
+  Box,
+  Typography,
+  Card,
+  CardContent,
+  CardMedia,
+  Chip,
+} from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import { Clock, Eye, Play, Video } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const topics = [
@@ -75,171 +82,182 @@ const trendingData = [
   },
 ];
 
-// Styled Components
-const SectionWrapper = styled(Box)(({ theme }) => ({
-  // backgroundColor: theme.palette.background.default,
-  paddingTop: theme.spacing(4),
-}));
-
-const HeaderRow = styled(Box)(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-  marginBottom: theme.spacing(3),
-  flexWrap: "wrap",
-  gap: theme.spacing(2),
-}));
-
-const TabsWrapper = styled(Box)(({ theme }) => ({
-  display: "flex",
-  gap: theme.spacing(1.5),
-  flexWrap: "wrap",
-}));
-
-const PillTab = styled("button")<{
-  $active?: boolean;
-}>(({ $active, theme }) => ({
-  border: $active
-    ? `2px solid ${theme.palette.primary.main}`
-    : `1px solid ${theme.palette.divider}`,
-  outline: "none",
-  background: $active
-    ? theme.palette.action.selected
-    : theme.palette.background.paper,
-  color: $active ? theme.palette.primary.main : theme.palette.text.primary,
-  padding: "7px 18px",
-  borderRadius: "8px",
-  fontWeight: 500,
-  fontSize: "1rem",
-  cursor: "pointer",
-  boxShadow: $active ? `0 2px 8px ${theme.palette.primary.main}40` : "none",
-  transition: "all 0.2s",
-  "&:hover": {
-    border: $active
-      ? `2px solid ${theme.palette.primary.main}`
-      : `1px solid ${theme.palette.divider}`,
-    background: $active
-      ? theme.palette.action.selected
-      : theme.palette.action.hover,
-  },
-}));
-
-const Title = styled(Typography)(({ theme }) => ({
-  fontWeight: "bold",
-  marginBottom: theme.spacing(2),
-}));
-
-const CardGrid = styled(Box)(({ theme }) => ({
-  display: "grid",
-  gap: theme.spacing(3),
-  gridTemplateColumns: "1fr",
-  [theme.breakpoints.up("sm")]: {
-    gridTemplateColumns: "1fr 1fr",
-  },
-  [theme.breakpoints.up("md")]: {
-    gridTemplateColumns: "1fr 1fr 1fr",
-  },
-  [theme.breakpoints.up("lg")]: {
-    gridTemplateColumns: "1fr 1fr 1fr 1fr",
-  },
-}));
-
-const StyledCard = styled(Card)(({ theme }) => ({
-  borderRadius: "16px",
-  overflow: "hidden",
-  position: "relative",
-  backgroundColor: theme.palette.background.paper,
-  boxShadow: `0px 4px 12px ${
-    theme.palette.mode === "dark" ? "rgba(0,0,0,0.5)" : "rgba(0,0,0,0.1)"
-  }`,
-  transition: "all 0.3s ease",
-  "&:hover": {
-    boxShadow: `0px 8px 20px ${
-      theme.palette.mode === "dark" ? "rgba(0,0,0,0.7)" : "rgba(0,0,0,0.2)"
-    }`,
-    transform: "scale(1.01)",
-  },
-}));
-
-const OverlayContent = styled(CardContent)(() => ({
-  position: "absolute",
-  bottom: 0,
-  left: 0,
-  width: "100%",
-  background: "rgba(0,0,0,0.6)",
-  color: "white",
-}));
-
 export default function TrendingNow() {
+  const theme = useTheme();
   const navigate = useNavigate();
-  const [tab, setTab] = React.useState(0);
+  const [activeTab, setActiveTab] = React.useState(0);
 
   // Filter cards by topic
   const filteredCards =
-    tab === 0
+    activeTab === 0
       ? trendingData
-      : trendingData.filter((card) => card.category === topics[tab]);
+      : trendingData.filter((card) => card.category === topics[activeTab]);
 
   return (
-    <SectionWrapper>
-      {/* Header and Tabs in one row */}
-      <HeaderRow>
-        <Title variant="h5">Trending Now</Title>
-        <TabsWrapper>
-          {topics.map((topic, i) => (
-            <PillTab key={i} $active={tab === i} onClick={() => setTab(i)}>
-              {topic}
-            </PillTab>
-          ))}
-        </TabsWrapper>
-      </HeaderRow>
-
-      {/* Cards */}
-      <CardGrid>
-        {filteredCards.map((card, i) => (
-          <StyledCard
-            key={i}
-            onClick={() =>
-              navigate(
-                card.type === "audio"
-                  ? `/audio-player/${card.id}`
-                  : `/video-player/${card.id}`
-              )
-            }
+    <Box sx={{ py: 4 }}>
+      <Box sx={{ mx: "auto" }}>
+        {/* Header */}
+        <Box sx={{ mb: 3 }}>
+          <Typography
+            variant="h4"
+            fontWeight="bold"
+            sx={{ mb: 2, color: theme.palette.text.primary }}
           >
-            {/* Image */}
-            <CardMedia
-              component="img"
-              height="220"
-              image={card.image}
-              alt={card.title}
-              style={{ filter: "brightness(0.9)" }}
-            />
+            Trending Now
+          </Typography>
 
-            {/* Overlay */}
-            <OverlayContent>
-              <Typography variant="body2" color="lightgray">
-                {card.type.charAt(0).toUpperCase() + card.type.slice(1)} -{" "}
-                {card.category}
-              </Typography>
-              <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                {card.title}
-              </Typography>
-              <Typography variant="body2">{card.author}</Typography>
+          {/* Filter Tabs */}
+          <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
+            {topics.map((topic, index) => (
+              <Chip
+                key={index}
+                label={topic}
+                onClick={() => setActiveTab(index)}
+                variant={activeTab === index ? "filled" : "outlined"}
+                sx={{
+                  borderRadius: "6px",
+                  fontWeight: 500,
+                  cursor: "pointer",
+                  "&:hover": {
+                    backgroundColor:
+                      activeTab === index
+                        ? theme.palette.primary.main
+                        : theme.palette.action.hover,
+                  },
+                }}
+                color={activeTab === index ? "primary" : "default"}
+              />
+            ))}
+          </Box>
+        </Box>
 
-              {/* Info row */}
-              <Box sx={{ display: "flex", alignItems: "center", mt: 1 }}>
-                <Clock size={18} style={{ marginRight: 4 }} />
-                <Typography variant="caption" sx={{ mr: 2 }}>
-                  {card.duration}
-                </Typography>
-                <Eye size={18} style={{ marginRight: 4 }} />
-                <Typography variant="caption">{card.views}</Typography>
+        {/* Content Grid */}
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: {
+              xs: "1fr",
+              sm: "repeat(2, 1fr)",
+              md: "repeat(3, 1fr)",
+              lg: "repeat(4, 1fr)",
+            },
+            gap: 3,
+          }}
+        >
+          {filteredCards.map((item) => (
+            <Card
+              key={item.id}
+              sx={{
+                borderRadius: "8px",
+                overflow: "hidden",
+                border: `1px solid ${theme.palette.divider}`,
+                backgroundColor: theme.palette.background.paper,
+                cursor: "pointer",
+                transition: "all 0.2s ease",
+                "&:hover": {
+                  boxShadow: theme.shadows[2],
+                  borderColor: theme.palette.primary.main,
+                },
+              }}
+              onClick={() =>
+                navigate(
+                  item.type === "audio"
+                    ? `/audio-player/${item.id}`
+                    : `/video-player/${item.id}`
+                )
+              }
+            >
+              {/* Media */}
+              <Box sx={{ position: "relative" }}>
+                <CardMedia
+                  component="img"
+                  height="160"
+                  image={item.image}
+                  alt={item.title}
+                  sx={{ objectFit: "cover" }}
+                />
+
+                {/* Type Badge */}
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: 8,
+                    right: 8,
+                    bgcolor: "rgba(0,0,0,0.7)",
+                    color: "white",
+                    px: 1,
+                    py: 0.5,
+                    borderRadius: "4px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 0.5,
+                  }}
+                >
+                  {item.type === "audio" ? (
+                    <Play size={12} />
+                  ) : (
+                    <Video size={12} />
+                  )}
+                  <Typography variant="caption" sx={{ fontSize: "0.7rem" }}>
+                    {item.type}
+                  </Typography>
+                </Box>
               </Box>
-            </OverlayContent>
-          </StyledCard>
-        ))}
-      </CardGrid>
-    </SectionWrapper>
+
+              {/* Content */}
+              <CardContent sx={{ p: 2 }}>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ mb: 1, fontSize: "0.75rem" }}
+                >
+                  {item.category}
+                </Typography>
+
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontWeight: 600,
+                    mb: 1,
+                    fontSize: "1rem",
+                    lineHeight: 1.3,
+                    display: "-webkit-box",
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: "vertical",
+                    overflow: "hidden",
+                  }}
+                >
+                  {item.title}
+                </Typography>
+
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ mb: 1.5, fontSize: "0.875rem" }}
+                >
+                  by {item.author}
+                </Typography>
+
+                {/* Stats */}
+                <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+                    <Clock size={14} />
+                    <Typography variant="caption" color="text.secondary">
+                      {item.duration}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+                    <Eye size={14} />
+                    <Typography variant="caption" color="text.secondary">
+                      {item.views}
+                    </Typography>
+                  </Box>
+                </Box>
+              </CardContent>
+            </Card>
+          ))}
+        </Box>
+      </Box>
+    </Box>
   );
 }

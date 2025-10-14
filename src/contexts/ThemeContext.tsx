@@ -40,9 +40,9 @@ export const AppThemeProvider: React.FC<AppThemeProviderProps> = ({ children }) 
     palette: {
       mode: themeMode,
       primary: {
-        main: themeMode === 'dark' ? '#6366f1' : '#4f46e5',
-        light: themeMode === 'dark' ? '#818cf8' : '#6366f1',
-        dark: themeMode === 'dark' ? '#4338ca' : '#3730a3',
+        main: themeMode === 'dark' ? '#10b981' : '#059669',
+        light: themeMode === 'dark' ? '#34d399' : '#10b981',
+        dark: themeMode === 'dark' ? '#047857' : '#065f46',
         contrastText: '#ffffff',
       },
       secondary: {

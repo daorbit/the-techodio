@@ -39,6 +39,10 @@ const AISuggestions: React.FC = () => {
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
       }
+      @keyframes slideIn {
+        0% { transform: translateX(100%); opacity: 0; }
+        100% { transform: translateX(0); opacity: 1; }
+      }
     `;
     document.head.appendChild(style);
     return () => {
@@ -105,19 +109,24 @@ const AISuggestions: React.FC = () => {
           right: 24,
           zIndex: 1000,
           background: loading
-            ? "linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(52, 211, 153, 0.3))"
-            : "linear-gradient(135deg, rgba(6, 95, 70, 0.4), rgba(16, 185, 129, 0.4), rgba(52, 211, 153, 0.4))",
+            ? "linear-gradient(135deg, rgba(16, 185, 129, 0.5), rgba(52, 211, 153, 0.5))"
+            : "linear-gradient(135deg, #00ff88, #4caf50, #66bb6a)",
           color: "#fff",
           "&:hover": {
             background: loading
-              ? "linear-gradient(135deg, rgba(16, 185, 129, 0.4), rgba(52, 211, 153, 0.4))"
-              : "linear-gradient(135deg, rgba(4, 120, 87, 0.5), rgba(5, 150, 105, 0.5), rgba(16, 185, 129, 0.5))",
-            animation: loading ? "none" : "pulse 0.6s ease-in-out",
+              ? "linear-gradient(135deg, rgba(16, 185, 129, 0.6), rgba(52, 211, 153, 0.6))"
+              : "linear-gradient(135deg, #00e676, #388e3c, #43a047)",
+            animation: loading ? "none" : "pulse 0.6s ease-in-out infinite",
+            transform: "scale(1.1)",
           },
-          boxShadow: "0 4px 20px rgba(0,229,255,0.3)",
-          width: 56,
-          height: 56,
+          "&:not(:hover)": {
+            animation: loading ? "none" : "sparkle 2s ease-in-out infinite",
+          },
+          boxShadow: "0 8px 32px rgba(0,255,136,0.4), 0 0 0 1px rgba(255,255,255,0.1)",
+          width: 64,
+          height: 64,
           transition: "all 0.3s ease",
+          border: "2px solid rgba(255,255,255,0.2)",
         }}
         aria-label="AI Suggestions"
       >
@@ -138,44 +147,49 @@ const AISuggestions: React.FC = () => {
       {showSuggestions && (
         <Box
           sx={{
-            position: "absolute",
-            bottom: 90,
-            right: 30,
+            position: "fixed",
+            bottom: 100,
+            right: 35,
             width: 320,
             maxHeight: 400,
             backgroundColor: isDarkMode
-              ? "rgba(30,30,30,0.95)"
-              : "rgba(255,255,255,0.95)",
-            backdropFilter: "blur(10px)",
-            borderRadius: 3,
-            boxShadow: "0 20px 40px rgba(0,0,0,0.3)",
+              ? "rgba(30,30,30,0.98)"
+              : "rgba(255,255,255,0.98)",
+            backdropFilter: "blur(20px)",
+            borderRadius: 4,
+            boxShadow: "0 25px 50px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.1)",
             border: `1px solid ${
-              isDarkMode ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)"
+              isDarkMode ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.15)"
             }`,
             overflow: "hidden",
             zIndex: 1001,
+            animation: "slideIn 0.4s ease-out",
+            transformOrigin: "top right",
           }}
         >
           {/* Header */}
           <Box
             sx={{
-              p: 2,
+              p: 2.5,
               borderBottom: `1px solid ${
-                isDarkMode ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)"
+                isDarkMode ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.15)"
               }`,
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
+              background: isDarkMode
+                ? "linear-gradient(135deg, rgba(0,255,136,0.1), rgba(30,30,30,0.9))"
+                : "linear-gradient(135deg, rgba(76,175,80,0.1), rgba(255,255,255,0.9))",
             }}
           >
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-              <Sparkles size={20} color={isDarkMode ? "#00e5ff" : "#1976d2"} />
-              <Typography
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+               <Typography
                 variant="h6"
                 sx={{
-                  fontSize: "1rem",
-                  fontWeight: 600,
+                  fontSize: "1.1rem",
+                  fontWeight: 700,
                   color: isDarkMode ? "#fff" : "#000",
+                  textShadow: "0 1px 2px rgba(0,0,0,0.1)",
                 }}
               >
                 AI Suggestions
@@ -188,14 +202,16 @@ const AISuggestions: React.FC = () => {
                 setShowSuggestions(false);
               }}
               sx={{
-                color: isDarkMode ? "#666" : "#999",
+                color: isDarkMode ? "#aaa" : "#666",
                 "&:hover": {
                   color: isDarkMode ? "#ff6b6b" : "#d32f2f",
-                  backgroundColor: "transparent",
+                  backgroundColor: "rgba(255,0,0,0.1)",
+                  transform: "scale(1.1)",
                 },
+                transition: "all 0.2s ease",
               }}
             >
-              <X size={16} />
+              <X size={18} />
             </IconButton>
           </Box>
 
@@ -236,12 +252,13 @@ const AISuggestions: React.FC = () => {
                 sx={{
                   display: "flex",
                   flexDirection: "column",
-                  gap: 1,
-                  maxHeight: 400,
+                  gap: 1.5,
+                  maxHeight: 350,
                   overflowY: "auto",
+                  p: 1,
                 }}
               >
-                {suggestions.map((track) => {
+                {suggestions.map((track, index) => {
                   const isCurrentTrack = currentTrack?.id === track.id;
                   const showPauseIcon = isCurrentTrack && isPlaying;
 
@@ -251,20 +268,25 @@ const AISuggestions: React.FC = () => {
                       sx={{
                         display: "flex",
                         alignItems: "center",
-                        p: 1.5,
-                        borderRadius: 2,
+                        p: 1,
+                        borderRadius: 3,
                         cursor: "pointer",
                         backgroundColor: isCurrentTrack
                           ? isDarkMode
-                            ? "rgba(0,229,255,0.1)"
-                            : "rgba(25,118,210,0.1)"
+                            ? "rgba(0,255,136,0.15)"
+                            : "rgba(76,175,80,0.15)"
                           : "transparent",
                         "&:hover": {
                           backgroundColor: isDarkMode
                             ? "rgba(255,255,255,0.1)"
                             : "rgba(0,0,0,0.05)",
+                           boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
                         },
-                        transition: "all 0.2s ease",
+                        transition: "all 0.3s ease",
+                        border: isCurrentTrack
+                          ? `1px solid ${isDarkMode ? "rgba(0,255,136,0.3)" : "rgba(76,175,80,0.3)"}`
+                          : "none",
+                        animation: `slideIn 0.5s ease-out ${index * 0.1}s both`,
                       }}
                       onClick={() => handleSelectTrack(track)}
                     >

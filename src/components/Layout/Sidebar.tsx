@@ -54,20 +54,20 @@ const StyledListItemButton = styled(ListItemButton, {
     paddingLeft: "10px",
     borderRadius: 10,
     transition: "background 0.2s, color 0.2s",
-    background: $active ? ($isDarkMode ? "rgba(0,229,255,0.1)" : "rgba(0,229,255,0.15)") : "inherit",
-    color: $active ? ($isDarkMode ? "#00e5ff" : "#000") : $isDarkMode ? "#fff" : "#000",
+    background: $active ? ($isDarkMode ? "rgba(16,185,129,0.1)" : "rgba(5,150,105,0.15)") : "inherit",
+    color: $active ? ($isDarkMode ? "#10b981" : "#000") : $isDarkMode ? "#fff" : "#000",
 
     "&:hover": {
       background: $active
-        ? ($isDarkMode ? "rgba(0,229,255,0.15)" : "rgba(0,229,255,0.25)")
+        ? ($isDarkMode ? "rgba(16,185,129,0.15)" : "rgba(5,150,105,0.25)")
         : $isDarkMode
         ? "rgba(255,255,255,0.1)"
         : "rgba(0,0,0,0.04)",
-      color: $active ? ($isDarkMode ? "#00e5ff" : "#000") : $isDarkMode ? "#fff" : "#000",
+      color: $active ? ($isDarkMode ? "#10b981" : "#000") : $isDarkMode ? "#fff" : "#000",
     },
 
     "& .MuiListItemIcon-root": {
-      color: $active ? ($isDarkMode ? "#00e5ff" : "#000") : $isDarkMode ? "#fff" : "#000",
+      color: $active ? ($isDarkMode ? "#10b981" : "#000") : $isDarkMode ? "#fff" : "#000",
       transition: "color 0.2s",
     },
   })
@@ -89,12 +89,12 @@ const ThemeToggleButton = styled(IconButton, {
     height: $collapsed ? 40 : 48,
     borderRadius: $collapsed ? "50%" : 12,
     background: $isDarkMode
-      ? "rgba(0,229,255,0.1)"
-      : "rgba(0,229,255,0.1)",
+      ? "rgba(16,185,129,0.1)"
+      : "rgba(5,150,105,0.1)",
     border: `1px solid ${
-      $isDarkMode ? "rgba(0,229,255,0.3)" : "rgba(0,229,255,0.3)"
+      $isDarkMode ? "rgba(16,185,129,0.3)" : "rgba(5,150,105,0.3)"
     }`,
-    color: $isDarkMode ? "#00e5ff" : "#1976d2",
+    color: $isDarkMode ? "#10b981" : "#059669",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
