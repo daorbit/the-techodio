@@ -1,6 +1,6 @@
 import { Box, Button, Typography, Card, Avatar, Chip } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { Play, Headphones, TrendingUp, Users, Clock, Star } from "lucide-react";
+import { Play, Headphones, TrendingUp } from "lucide-react";
 import TrendingNow from "./NewTrendSection";
 
 export default function NeuralNetworksHero() {
@@ -11,91 +11,130 @@ export default function NeuralNetworksHero() {
       <Box
         sx={{
           position: "relative",
-          py: { xs: 6, md: 8 },
-          px: { xs: 2, md: 4 },
-          textAlign: "center",
-          backgroundColor:
-            theme.palette.mode === "dark"
-              ? 'backgroundColor: "linear-gradient(135deg, rgb(26, 26, 26) 0%, rgb(45, 45, 45) 100%)"'
-              : "#f8f9fa",
+          py: { xs: 8, md: 4 },
+          // px: { xs: 4, md: 0 },
           borderBottom: `1px solid ${theme.palette.divider}`,
         }}
       >
-        <Box sx={{ mx: "auto" }}>
-          <Typography
-            variant="h2"
-            sx={{
-              fontWeight: 700,
-              color: theme.palette.text.primary,
-              mb: 2,
-            }}
-          >
-            The Future of Tech Education
-          </Typography>
-          <Typography
-            variant="h5"
-            sx={{
-              color: theme.palette.text.secondary,
-              mb: 4,
-              maxWidth: 800,
-              mx: "auto",
-            }}
-          >
-            Immerse yourself in cutting-edge technology through audio
-            experiences and expert insights
-          </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              gap: 2,
-              flexWrap: "wrap",
-            }}
-          >
-            <Button
-              variant="contained"
-              size="large"
+        <Box sx={{ mx: "auto", position: "relative" }}>
+          <Box>
+            <Chip
+              icon={<Play size={14} />}
+              label="Cutting-edge audio learning"
+              size="small"
               sx={{
-                bgcolor: theme.palette.primary.main,
-                color: "white",
-                px: 4,
-                py: 1.5,
-                borderRadius: "8px",
+                bgcolor:
+                  theme.palette.mode === "dark"
+                    ? "rgba(99,102,241,0.07)"
+                    : "rgba(79,70,229,0.06)",
+                color:
+                  theme.palette.mode === "dark"
+                    ? theme.palette.primary.light
+                    : theme.palette.primary.dark,
+                border: `1px solid ${theme.palette.divider}`,
+                px: 2,
+                py: 1,
                 fontWeight: 600,
-                textTransform: "none",
-                "&:hover": {
-                  bgcolor: theme.palette.primary.dark,
-                },
+                borderRadius: "999px",
+                marginBottom: 2,
+              }}
+            />
+          </Box>
+
+          <Box sx={{ textAlign: { xs: "center", md: "left" } }}>
+            <Typography
+              component="h1"
+              variant="h1"
+              sx={{
+                fontWeight: 600,
+                color: theme.palette.text.primary,
+                mb: 2,
+                letterSpacing: "-0.02em",
+                lineHeight: 1.05,
+                fontSize: { xs: "2.25rem", md: "4rem" },
               }}
             >
-              <Play size={20} style={{ marginRight: 8 }} />
-              Start Exploring
-            </Button>
-            <Button
-              variant="outlined"
-              size="large"
+              The Future of{" "}
+              <Box component="span" sx={{ color: theme.palette.info.main }}>
+                Tech
+              </Box>
+              {"\n"}
+              <Box component="span" display="block">
+                Education
+              </Box>
+            </Typography>
+
+            <Typography
+              variant="h6"
               sx={{
-                borderColor: theme.palette.primary.main,
-                color: theme.palette.primary.main,
-                px: 4,
-                py: 1.5,
-                borderRadius: "8px",
-                fontWeight: 600,
-                textTransform: "none",
-                "&:hover": {
-                  bgcolor: theme.palette.primary.main,
-                  color: "white",
-                },
+                color: theme.palette.text.secondary,
+                mb: 4,
+                maxWidth: 760,
+                fontWeight: 400,
+                fontSize: { xs: "1rem", md: "1rem" },
+                textAlign: { xs: "center", md: "left" },
               }}
             >
-              <Headphones size={20} style={{ marginRight: 8 }} />
-              Browse Library
-            </Button>
+              Immerse yourself in cutting-edge technology through expertly
+              crafted audio experiences and insights from industry leaders.
+              Learn at your own pace, anywhere, anytime.
+            </Typography>
+
+            <Box
+              sx={{
+                display: "flex",
+                gap: 2,
+                justifyContent: { xs: "center", md: "flex-start" },
+                flexWrap: "wrap",
+              }}
+            >
+              <Button
+                variant="outlined"
+                size="large"
+                startIcon={<Play size={18} />}
+                sx={{
+                  px: 3,
+                  borderRadius: "10px",
+                  fontWeight: 600,
+                  textTransform: "none",
+                  borderColor: theme.palette.info.main,
+                  color: theme.palette.info.main,
+                  "&:hover": {
+                    backgroundColor: "rgba(6,182,212,0.06)",
+                    color: theme.palette.info.light,
+                    borderColor: theme.palette.info.light,
+                  },
+                }}
+              >
+                Start Exploring
+              </Button>
+
+              <Button
+                variant="outlined"
+                size="large"
+                startIcon={<Headphones size={18} />}
+                sx={{
+                  px: 4,
+                  borderRadius: "10px",
+                  fontWeight: 600,
+                  textTransform: "none",
+                  borderColor: theme.palette.info.main,
+                  color: theme.palette.info.main,
+                  "&:hover": {
+                    backgroundColor: "rgba(6,182,212,0.06)",
+                    color: theme.palette.info.light,
+                    borderColor: theme.palette.info.light,
+                  },
+                }}
+              >
+                Browse Library
+              </Button>
+            </Box>
           </Box>
         </Box>
       </Box>
 
-      <Box sx={{ py: 4 }}>
+      {/* <Box sx={{ paddingTop: 5 }}>
         <Box sx={{ mx: "auto" }}>
           <Box
             sx={{
@@ -133,14 +172,14 @@ export default function NeuralNetworksHero() {
             ))}
           </Box>
         </Box>
-      </Box>
+      </Box> */}
 
-      <Box sx={{ py: 4 }}>
+      <Box sx={{ paddingTop: 4 }}>
         <Box sx={{ mx: "auto" }}>
           <Typography
             variant="h4"
             fontWeight="bold"
-            textAlign="center"
+            textAlign="left"
             sx={{
               mb: 3,
               color: theme.palette.text.primary,
@@ -223,9 +262,9 @@ export default function NeuralNetworksHero() {
           </Box>
         </Box>
       </Box>
+      <TrendingNow />
 
       {/* Trending Section */}
-      <TrendingNow />
     </Box>
   );
 }

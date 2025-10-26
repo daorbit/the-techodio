@@ -125,10 +125,8 @@ const ThemeToggleButton = styled(IconButton, {
       borderColor: $isDarkMode
         ? "rgba(0,229,255,0.5)"
         : "rgba(0,229,255,0.5)",
-      transform: "translateY(-1px)",
-      boxShadow: $isDarkMode
-        ? "0 4px 12px rgba(0,229,255,0.2)"
-        : "0 4px 12px rgba(0,229,255,0.2)",
+      transform: "translateY(0px)",
+    
 
       "&::before": {
         opacity: 1,
@@ -261,8 +259,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 sx={{
                   fontSize: "0.875rem",
                   fontWeight: 500,
-                  color: isDarkMode ? "#00e5ff" : "#1976d2",
-                  textShadow: "0 1px 2px rgba(0,0,0,0.1)",
+                   textShadow: "0 1px 2px rgba(0,0,0,0.1)",
                 }}
               >
                 {isDarkMode ? "Dark Mode" : "Light Mode"}

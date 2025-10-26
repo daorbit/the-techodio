@@ -94,7 +94,7 @@ export default function TrendingNow() {
       : trendingData.filter((card) => card.category === topics[activeTab]);
 
   return (
-    <Box sx={{ py: 4 }}>
+    <Box sx={{ paddingTop: 5 }}>
       <Box sx={{ mx: "auto" }}>
         {/* Header */}
         <Box sx={{ mb: 3 }}>
