@@ -94,14 +94,18 @@ export default function TrendingNow() {
       : trendingData.filter((card) => card.category === topics[activeTab]);
 
   return (
-    <Box sx={{ paddingTop: 5 }}>
+    <Box sx={{ paddingTop: { xs: 6, sm: 5 }, px: { xs: 0, sm: 0 } }}>
       <Box sx={{ mx: "auto" }}>
         {/* Header */}
         <Box sx={{ mb: 3 }}>
           <Typography
             variant="h4"
             fontWeight="bold"
-            sx={{ mb: 2, color: theme.palette.text.primary }}
+            sx={{ 
+              mb: 2, 
+              color: theme.palette.text.primary,
+              fontSize: { xs: "1.5rem", sm: "2.125rem" }
+            }}
           >
             Trending Now
           </Typography>
@@ -118,6 +122,8 @@ export default function TrendingNow() {
                   borderRadius: "6px",
                   fontWeight: 500,
                   cursor: "pointer",
+                  fontSize: { xs: "0.75rem", sm: "0.875rem" },
+                  height: { xs: 28, sm: 32 },
                   "&:hover": {
                     backgroundColor:
                       activeTab === index

@@ -13,9 +13,6 @@ export default function NeuralNetworksHero() {
       <Box
         sx={{
           position: "relative",
-          py: { xs: 8, md: 4 },
-          // px: { xs: 4, md: 0 },
-          borderBottom: `1px solid ${theme.palette.divider}`,
         }}
       >
         <Box>
@@ -74,7 +71,7 @@ export default function NeuralNetworksHero() {
                   display: "flex",
                   gap: 2,
                   justifyContent: { xs: "center", md: "flex-start" },
-                  flexWrap: "wrap",
+                  // flexWrap: "wrap",
                 }}
               >
                 <Button
@@ -88,6 +85,7 @@ export default function NeuralNetworksHero() {
                     textTransform: "none",
                     borderColor: theme.palette.info.main,
                     color: theme.palette.info.main,
+                    fontSize: { xs: "0.8rem", md: "1rem" },
                     "&:hover": {
                       backgroundColor: "rgba(6,182,212,0.06)",
                       color: theme.palette.info.light,
@@ -109,6 +107,8 @@ export default function NeuralNetworksHero() {
                     textTransform: "none",
                     borderColor: theme.palette.info.main,
                     color: theme.palette.info.main,
+                    fontSize: { xs: "0.8rem", md: "1rem" },
+
                     "&:hover": {
                       backgroundColor: "rgba(6,182,212,0.06)",
                       color: theme.palette.info.light,
@@ -123,7 +123,6 @@ export default function NeuralNetworksHero() {
 
             <Box
               sx={{
-                flex: 1,
                 display: { xs: "none", md: "block" },
                 width: { md: "600px" },
               }}
