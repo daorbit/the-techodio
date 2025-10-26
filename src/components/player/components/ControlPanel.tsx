@@ -7,6 +7,7 @@ import {
   Volume2,
   VolumeX,
 } from 'lucide-react';
+import { CircularProgress } from '@mui/material';
 import type { AudioPlayerState } from '../types';
 
 interface ControlPanelProps {
@@ -61,7 +62,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
           aria-label={isPlaying ? "Pause" : "Play"}
         >
           {isLoading ? (
-            <div className="loading-spinner" aria-label="Loading" />
+            <CircularProgress size={24} />
           ) : isPlaying ? (
             <Pause size={24} />
           ) : (

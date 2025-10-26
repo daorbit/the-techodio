@@ -519,6 +519,7 @@
 
 .play-pause-btn:hover {
   transform: scale(1.05);
+  background: #1db954;
   box-shadow: 0 12px 40px rgba(29, 185, 84, 0.4);
 }
 
