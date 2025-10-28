@@ -168,12 +168,7 @@ const Playlists = () => {
               transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
               cursor: "pointer",
               position: "relative",
-              "&:hover": {
-                boxShadow:
-                  themeMode === "dark"
-                    ? "0 20px 40px rgba(0,229,255,0.15), 0 0 0 1px rgba(0,229,255,0.1)"
-                    : "0 20px 40px rgba(0,0,0,0.12), 0 0 0 1px rgba(25,118,210,0.08)",
-              },
+               
               "&::before": {
                 content: '""',
                 position: "absolute",

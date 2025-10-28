@@ -361,6 +361,7 @@ const PlaylistDetail = () => {
             {playlist.tracks.map((track: Track, index: number) => (
               <ListItem
                 key={track.id}
+                onClick={() => handlePlayTrack(track)}
                 sx={{
                   borderBottom:
                     index < playlist.tracks.length - 1
@@ -377,6 +378,7 @@ const PlaylistDetail = () => {
                   },
                   px: { xs: 2, md: 3 },
                   py: { xs: 1.5, md: 2 },
+                  cursor: "pointer",
                 }}
               >
                 <ListItemAvatar>
@@ -448,7 +450,10 @@ const PlaylistDetail = () => {
                     }}
                   >
                     <IconButton
-                      onClick={() => handlePlayTrack(track)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handlePlayTrack(track);
+                      }}
                       sx={{
                         color:
                           currentTrack?.id === track.id && isPlaying

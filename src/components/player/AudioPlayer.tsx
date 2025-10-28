@@ -143,8 +143,7 @@ const AudioPlayer: React.FC = () => {
     );
   }
 
-  // Safety check - if no track and not loading, show error
-  if (!track) {
+   if (!track) {
     return (
       <Suspense fallback={<div>Loading...</div>}>
         <ErrorState onBack={handleBack} error="Track data unavailable" />

@@ -1,6 +1,26 @@
-// API service for fetching playlists from the backend
+import type { Playlist, Track } from "../utils/playlistData";
 
-import type { Playlist, Track } from '../utils/playlistData';
+const durationToSeconds = (duration: string): number => {
+  const parts = duration.split(":").map(Number);
+  if (parts.length === 2) {
+    return parts[0] * 60 + parts[1];
+  }
+  return 0;
+};
+
+const secondsToDuration = (seconds: number): string => {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${mins}:${secs.toString().padStart(2, "0")}`;
+};
+
+const calculateTotalDuration = (tracks: ApiTrack[]): string => {
+  const totalSeconds = tracks.reduce(
+    (total, track) => total + durationToSeconds(track.duration),
+    0
+  );
+  return secondsToDuration(totalSeconds);
+};
 
 export interface ApiTrack {
   _id: string;
@@ -68,12 +88,16 @@ export const mapApiTrackToTrack = (apiTrack: ApiTrack): Track => ({
   audioUrl: apiTrack.audioUrl,
 });
 
-export const mapApiPlaylistToPlaylist = (apiPlaylist: ApiPlaylist): Playlist => ({
+export const mapApiPlaylistToPlaylist = (
+  apiPlaylist: ApiPlaylist
+): Playlist => ({
   id: apiPlaylist._id,
   title: apiPlaylist.title,
   description: apiPlaylist.description,
   trackCount: apiPlaylist.tracks ? apiPlaylist.tracks.length : 0,
-  duration: apiPlaylist.duration,
+  duration: apiPlaylist.tracks
+    ? calculateTotalDuration(apiPlaylist.tracks)
+    : "0:00",
   thumbnail: apiPlaylist.thumbnail,
   createdBy: apiPlaylist.createdBy,
   createdAt: apiPlaylist.createdAt,
@@ -82,29 +106,36 @@ export const mapApiPlaylistToPlaylist = (apiPlaylist: ApiPlaylist): Playlist => 
   tags: apiPlaylist.tags || [],
 });
 
-const API_BASE_URL = 'https://da-pages-be.vercel.app/api';
+const API_BASE_URL = "https://da-pages-be.vercel.app/api";
 
-export const fetchPlaylists = async (page: number = 1, limit: number = 10): Promise<{ playlists: Playlist[], pagination: PaginationInfo }> => {
+export const fetchPlaylists = async (
+  page: number = 1,
+  limit: number = 10
+): Promise<{ playlists: Playlist[]; pagination: PaginationInfo }> => {
   try {
-    const response = await fetch(`${API_BASE_URL}/playlists?page=${page}&limit=${limit}`);
+    const response = await fetch(
+      `${API_BASE_URL}/playlists?page=${page}&limit=${limit}`
+    );
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data: ApiResponse = await response.json();
     if (!data.success || !data.data) {
-      throw new Error('API returned invalid response');
+      throw new Error("API returned invalid response");
     }
     return {
       playlists: data.data.playlists.map(mapApiPlaylistToPlaylist),
-      pagination: data.data.pagination
+      pagination: data.data.pagination,
     };
   } catch (error) {
-    console.error('Error fetching playlists:', error);
+    console.error("Error fetching playlists:", error);
     throw error;
   }
 };
 
-export const fetchPlaylistById = async (id: string): Promise<Playlist | null> => {
+export const fetchPlaylistById = async (
+  id: string
+): Promise<Playlist | null> => {
   try {
     const response = await fetch(`${API_BASE_URL}/playlists/${id}`);
     if (!response.ok) {
@@ -119,7 +150,7 @@ export const fetchPlaylistById = async (id: string): Promise<Playlist | null> =>
     }
     return mapApiPlaylistToPlaylist(data.data.playlists[0]);
   } catch (error) {
-    console.error('Error fetching playlist:', error);
+    console.error("Error fetching playlist:", error);
     throw error;
   }
 };
