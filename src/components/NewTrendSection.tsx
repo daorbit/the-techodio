@@ -6,6 +6,7 @@ import {
   CardContent,
   CardMedia,
   Chip,
+  Skeleton,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { Clock, Eye, Play } from "lucide-react";
@@ -120,7 +121,32 @@ export default function TrendingNow() {
             gap: 3,
           }}
         >
-          {filteredCards.map((item) => (
+          {loading
+            ? // Show skeleton cards while loading
+              Array.from({ length: 4 }).map((_, index) => (
+                <Card
+                  key={`skeleton-${index}`}
+                  sx={{
+                    borderRadius: "8px",
+                    overflow: "hidden",
+                    border: `1px solid ${theme.palette.divider}`,
+                    backgroundColor: theme.palette.background.paper,
+                  }}
+                >
+                  <Skeleton variant="rectangular" height={160} />
+                  <CardContent sx={{ p: 2 }}>
+                    <Skeleton variant="text" width="60%" sx={{ mb: 1 }} />
+                    <Skeleton variant="text" width="80%" sx={{ mb: 1 }} />
+                    <Skeleton variant="text" width="40%" sx={{ mb: 1.5 }} />
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                      <Skeleton variant="text" width="30%" />
+                      <Skeleton variant="text" width="30%" />
+                    </Box>
+                  </CardContent>
+                </Card>
+              ))
+            : // Show actual cards
+              filteredCards.map((item) => (
             <Card
               key={item.id}
               sx={{
