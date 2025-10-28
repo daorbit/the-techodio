@@ -12,6 +12,7 @@ import {
   MenuItem,
   ToggleButton,
   ToggleButtonGroup,
+  Skeleton,
 } from "@mui/material";
 import {
   SectionContainer,
@@ -186,49 +187,150 @@ const AudioLibrary = () => {
       </HeaderRow>
 
       <CardsWrapper view={view}>
-        {tracks.map((track) => (
-          <StyledCard
-            key={track.id}
-            view={view}
-            onClick={() => handleTrackClick(track)}
-          >
-            <AudioContainer view={view}>
-              <CardMedia
-                component="img"
-                height={view === "list" ? 120 : 180}
-                image={track.thumbnail}
-                alt={track.title}
-                onError={handleImageError}
-                sx={{ filter: "blur(3px)" }}
-              />
-              <OverlayGradient />
-              <StyledChip label={track.category} color="primary" />
-              <PlayButton aria-label="play" size="large">
-                <Play size={22} />
-              </PlayButton>
-            </AudioContainer>
-            <CardContent
-              sx={{
-                textAlign: "left",
-                flex: view === "list" ? 1 : undefined,
-                p: view === "list" ? 2 : undefined,
-                [theme.breakpoints.down("sm")]: {
-                  p: view === "list" ? 1 : undefined,
-                },
-              }}
-            >
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                alignItems="start"
-              >
-                <Box>
-                  <Typography
-                    variant="subtitle1"
-                    fontWeight={600}
+        {loading
+          ? Array.from({ length: 6 }).map((_, index) => (
+              <StyledCard key={`skeleton-${index}`} view={view}>
+                <AudioContainer view={view}>
+                  <Skeleton
+                    variant="rectangular"
+                    height={view === "list" ? 120 : 180}
+                    sx={{ width: "100%" }}
+                  />
+                  <OverlayGradient />
+                  <Skeleton
+                    variant="rectangular"
+                    width={60}
+                    height={24}
                     sx={{
+                      position: "absolute",
+                      top: 10,
+                      right: 10,
+                      borderRadius: 1,
+                    }}
+                  />
+                  <Skeleton
+                    variant="circular"
+                    width={48}
+                    height={48}
+                    sx={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                    }}
+                  />
+                </AudioContainer>
+                <CardContent
+                  sx={{
+                    textAlign: "left",
+                    flex: view === "list" ? 1 : undefined,
+                    p: view === "list" ? 2 : undefined,
+                    [theme.breakpoints.down("sm")]: {
+                      p: view === "list" ? 1 : undefined,
+                    },
+                  }}
+                >
+                  <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="start"
+                  >
+                    <Box sx={{ width: "100%" }}>
+                      <Skeleton variant="text" width="80%" height={24} />
+                      <Skeleton variant="text" width="60%" height={20} />
+                    </Box>
+                  </Box>
+                  <Skeleton
+                    variant="text"
+                    width="100%"
+                    height={20}
+                    sx={{ mt: 1 }}
+                  />
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    gap={0.5}
+                    sx={{ mt: 1 }}
+                  >
+                    <Skeleton variant="circular" width={16} height={16} />
+                    <Skeleton variant="text" width="40%" height={16} />
+                  </Box>
+                </CardContent>
+              </StyledCard>
+            ))
+          : tracks.map((track) => (
+              <StyledCard
+                key={track.id}
+                view={view}
+                onClick={() => handleTrackClick(track)}
+              >
+                <AudioContainer view={view}>
+                  <CardMedia
+                    component="img"
+                    height={view === "list" ? 120 : 180}
+                    image={track.thumbnail}
+                    alt={track.title}
+                    onError={handleImageError}
+                    sx={{ filter: "blur(3px)" }}
+                  />
+                  <OverlayGradient />
+                  <StyledChip label={track.category} color="primary" />
+                  <PlayButton aria-label="play" size="large">
+                    <Play size={22} />
+                  </PlayButton>
+                </AudioContainer>
+                <CardContent
+                  sx={{
+                    textAlign: "left",
+                    flex: view === "list" ? 1 : undefined,
+                    p: view === "list" ? 2 : undefined,
+                    [theme.breakpoints.down("sm")]: {
+                      p: view === "list" ? 1 : undefined,
+                    },
+                  }}
+                >
+                  <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="start"
+                  >
+                    <Box>
+                      <Typography
+                        variant="subtitle1"
+                        fontWeight={600}
+                        sx={{
+                          [theme.breakpoints.down("sm")]: {
+                            fontSize: "0.9rem",
+                            whiteSpace: "normal",
+                            overflow: "visible",
+                            textOverflow: "clip",
+                          },
+                        }}
+                        noWrap
+                      >
+                        {track.title}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        sx={{
+                          [theme.breakpoints.down("sm")]: {
+                            fontSize: "0.75rem",
+                          },
+                        }}
+                      >
+                        {track.author} •{" "}
+                        {new Date(track.date).toLocaleDateString()}
+                      </Typography>
+                    </Box>
+                  </Box>
+
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{
+                      mt: 1,
                       [theme.breakpoints.down("sm")]: {
-                        fontSize: "0.9rem",
                         whiteSpace: "normal",
                         overflow: "visible",
                         textOverflow: "clip",
@@ -236,57 +338,28 @@ const AudioLibrary = () => {
                     }}
                     noWrap
                   >
-                    {track.title}
+                    {track.description}
                   </Typography>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{
-                      [theme.breakpoints.down("sm")]: {
-                        fontSize: "0.75rem",
-                      },
-                    }}
-                  >
-                    {track.author} • {new Date(track.date).toLocaleDateString()}
-                  </Typography>
-                </Box>
-              </Box>
 
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                sx={{
-                  mt: 1,
-                  [theme.breakpoints.down("sm")]: {
-                    whiteSpace: "normal",
-                    overflow: "visible",
-                    textOverflow: "clip",
-                  },
-                }}
-                noWrap
-              >
-                {track.description}
-              </Typography>
-
-              <ActionsRow>
-                <Box display="flex" alignItems="center" gap={0.5}>
-                  <Clock size={16} />
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{
-                      [theme.breakpoints.down("sm")]: {
-                        fontSize: "0.75rem",
-                      },
-                    }}
-                  >
-                    {track.duration}
-                  </Typography>
-                </Box>
-              </ActionsRow>
-            </CardContent>
-          </StyledCard>
-        ))}
+                  <ActionsRow>
+                    <Box display="flex" alignItems="center" gap={0.5}>
+                      <Clock size={16} />
+                      <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        sx={{
+                          [theme.breakpoints.down("sm")]: {
+                            fontSize: "0.75rem",
+                          },
+                        }}
+                      >
+                        {track.duration}
+                      </Typography>
+                    </Box>
+                  </ActionsRow>
+                </CardContent>
+              </StyledCard>
+            ))}
       </CardsWrapper>
     </SectionContainer>
   );
