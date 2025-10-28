@@ -106,7 +106,7 @@ function App() {
 
   const contentStyle: React.CSSProperties = {
     flexGrow: 1,
-    padding: isPlayerPage ? "0" : "32px",
+    padding: isPlayerPage ? "0" : "24px",
     overflowX: "hidden" as const,
     overflowY: "auto",
     background: themeMode === 'dark' 

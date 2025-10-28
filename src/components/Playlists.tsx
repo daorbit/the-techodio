@@ -1,4 +1,4 @@
-import { Play, Clock, Heart, Music, Users } from "lucide-react";
+import { Play, Clock, Music } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -340,38 +340,7 @@ const Playlists = () => {
                   </Typography>
                 </Box>
 
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  {playlist.isPublic && (
-                    <Users
-                      size={16}
-                      style={{
-                        color:
-                          themeMode === "dark"
-                            ? "rgba(255,255,255,0.5)"
-                            : "rgba(0,0,0,0.5)",
-                      }}
-                    />
-                  )}
-                  <IconButton
-                    size="small"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      // Handle favorite toggle
-                    }}
-                    sx={{
-                      color:
-                        themeMode === "dark"
-                          ? "rgba(255,255,255,0.5)"
-                          : "rgba(0,0,0,0.5)",
-                      "&:hover": {
-                        color: "#ff4081",
-                      },
-                      p: 0.5,
-                    }}
-                  >
-                    <Heart size={18} />
-                  </IconButton>
-                </Box>
+                
               </Box>
             </CardContent>
           </Box>
