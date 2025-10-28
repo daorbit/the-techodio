@@ -1,12 +1,29 @@
 import { Box, Button, Typography, Card, Avatar, Chip } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { Play, Headphones, TrendingUp } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import Lottie from "lottie-react";
 import homePagePodcastAnimation from "./shared/Animations/homePagePodcastAnimation.json";
 import TrendingNow from "./NewTrendSection";
 
 export default function NeuralNetworksHero() {
   const theme = useTheme();
+  const navigate = useNavigate();
+
+  const handleCategoryClick = (categoryTitle: string) => {
+    // Define playlist IDs for each category
+    const categoryPlaylists = {
+      "System Design": "69006a5ac5f5d2ed24c2e5b8",
+      "Web Development": "69006a5ac5f5d2ed24c2e5b9",
+      "Cybersecurity": "69006a5ac5f5d2ed24c2e5ba",
+      "Cloud Computing": "69006a5ac5f5d2ed24c2e5bb",
+    };
+
+    const playlistId = categoryPlaylists[categoryTitle as keyof typeof categoryPlaylists];
+    if (playlistId) {
+      navigate(`/playlists/${playlistId}`);
+    }
+  };
 
   return (
     <Box>
@@ -181,6 +198,7 @@ export default function NeuralNetworksHero() {
                 ].map((category, index) => (
                   <Card
                     key={index}
+                    onClick={() => handleCategoryClick(category.title)}
                     sx={{
                       p: 2,
                       borderRadius: "8px",

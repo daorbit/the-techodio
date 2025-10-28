@@ -9,7 +9,7 @@ import {
   IconButton,
   Chip,
   useTheme,
-  CircularProgress,
+  Skeleton,
 } from "@mui/material";
 import { useThemeContext } from "../hooks/useThemeContext";
 import { usePlaylists } from "../hooks/usePlaylists";
@@ -21,18 +21,73 @@ const Playlists = () => {
 
   const theme = useTheme();
 
+  const renderSkeletonCard = () => (
+    <Box
+      sx={{
+        background:
+          themeMode === "dark"
+            ? "linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 100%)"
+            : "linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.85) 100%)",
+        borderRadius: 4,
+        overflow: "hidden",
+        backdropFilter: "blur(20px)",
+        border: `1px solid ${
+          themeMode === "dark"
+            ? "rgba(255,255,255,0.1)"
+            : "rgba(0,0,0,0.08)"
+        }`,
+      }}
+    >
+      <Skeleton variant="rectangular" height={200} />
+      <CardContent sx={{ p: 3 }}>
+        <Skeleton variant="text" height={28} width="80%" sx={{ mb: 2 }} />
+        <Skeleton variant="text" height={20} width="100%" sx={{ mb: 1 }} />
+        <Skeleton variant="text" height={20} width="60%" sx={{ mb: 3 }} />
+        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <Box sx={{ display: "flex", gap: 2 }}>
+            <Skeleton variant="text" height={16} width={60} />
+            <Skeleton variant="text" height={16} width={80} />
+          </Box>
+          <Skeleton variant="circular" width={24} height={24} />
+        </Box>
+      </CardContent>
+    </Box>
+  );
+
   if (loading) {
     return (
       <Box
         sx={{
           minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          
         }}
       >
-        <CircularProgress size={60} />
+        {/* Header */}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            mb: 4,
+            flexWrap: "wrap",
+            gap: 2,
+          }}
+        >
+          <Skeleton variant="text" height={40} width={150} />
+        </Box>
+
+        {/* Skeleton Grid */}
+        <Box
+          sx={{
+            display: "grid",
+            flexDirection: "column",
+            gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
+            gap: 3,
+          }}
+        >
+          {Array.from({ length: 6 }).map((_, index) => (
+            <div key={index}>{renderSkeletonCard()}</div>
+          ))}
+        </Box>
       </Box>
     );
   }

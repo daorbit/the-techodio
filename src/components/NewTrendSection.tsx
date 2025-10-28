@@ -10,9 +10,9 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { Clock, Eye, Play } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { fetchTracksAsync } from "../store/tracksSlice";
+import { setCurrentTrack, setShowMiniPlayer, setPendingPlay } from "../store/audioSlice";
 import type { Track } from "../utils/playlistData";
 
 interface CardData {
@@ -29,7 +29,6 @@ interface CardData {
 
 export default function TrendingNow() {
   const theme = useTheme();
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { tracks, loading, loaded } = useAppSelector((state) => state.tracks);
   const [activeTab, setActiveTab] = React.useState(0);
@@ -161,9 +160,24 @@ export default function TrendingNow() {
                   borderColor: theme.palette.primary.main,
                 },
               }}
-              onClick={() =>
-                navigate(`/audio-player/${item.id}`)
-              }
+              onClick={() => {
+                // Set the current track and show mini player with auto-play
+                const trackData = {
+                  id: item.id,
+                  title: item.title,
+                  author: item.author,
+                  description: item.category,
+                  duration: item.duration,
+                  listeners: item.views,
+                  date: new Date().toISOString(),
+                  thumbnail: item.image,
+                  category: item.category,
+                  audioUrl: item.audio,
+                };
+                dispatch(setCurrentTrack(trackData));
+                dispatch(setPendingPlay(true)); // Enable auto-play
+                dispatch(setShowMiniPlayer(true));
+              }}
             >
               {/* Media */}
               <Box sx={{ position: "relative" }}>

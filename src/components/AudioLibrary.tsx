@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Play, Clock, Grid, List, Heart, DownloadCloud } from "lucide-react";
+import { Play, Clock, Grid, List } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import { useMediaQuery } from "@mui/material";
@@ -8,7 +8,6 @@ import {
   Typography,
   CardContent,
   CardMedia,
-  IconButton,
   Select,
   MenuItem,
   ToggleButton,
@@ -47,7 +46,6 @@ const AudioLibrary = () => {
     }
   }, [dispatch, tracks.length, loading]);
   const [view, setView] = React.useState<"grid" | "list">("grid");
-  const iconSize = isMobile ? 18 : 16;
 
   React.useEffect(() => {
     if (isMobile && view !== "grid") {
@@ -252,14 +250,6 @@ const AudioLibrary = () => {
                     {track.author} • {new Date(track.date).toLocaleDateString()}
                   </Typography>
                 </Box>
-                <Box>
-                  <IconButton size="small" aria-label="like audio">
-                    <Heart size={iconSize} />
-                  </IconButton>
-                  <IconButton size="small" aria-label="download audio">
-                    <DownloadCloud size={iconSize} />
-                  </IconButton>
-                </Box>
               </Box>
 
               <Typography
@@ -293,17 +283,6 @@ const AudioLibrary = () => {
                     {track.duration}
                   </Typography>
                 </Box>
-                <Typography
-                  color="#00c4d6"
-                  fontWeight={600}
-                  sx={{
-                    [theme.breakpoints.down("sm")]: {
-                      fontSize: "0.75rem",
-                    },
-                  }}
-                >
-                  {track.listeners} listeners
-                </Typography>
               </ActionsRow>
             </CardContent>
           </StyledCard>
