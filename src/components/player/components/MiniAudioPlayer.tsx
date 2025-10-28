@@ -31,8 +31,8 @@ const MiniAudioPlayer: React.FC = () => {
     useAppSelector((state) => state.audio);
 
   const { position, isDragging, dragRef, handleMouseDown } = useDraggable({
-    initialX: 1041,
-    initialY: 525,
+    initialX: window.innerWidth - 360, 
+    initialY: window.innerHeight - 300,
     playerWidth: 360,
     playerHeight: 200,
   });
