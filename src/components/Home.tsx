@@ -136,7 +136,6 @@ export default function NeuralNetworksHero() {
               />
             </Box>
           </Box>
-           
 
           <ExploreCategories />
 
