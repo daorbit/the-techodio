@@ -8,7 +8,6 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import {
   setCurrentTrack,
   setShowMiniPlayer,
-  setPendingPlay,
   setPlaying,
 } from "../store/audioSlice";
 import Lottie from "lottie-react";
@@ -83,8 +82,7 @@ const AISuggestions: React.FC = () => {
   };
 
   const handleSelectTrack = (track: Track) => {
-    dispatch(setCurrentTrack(track));
-    dispatch(setPendingPlay(true));
+    dispatch(setCurrentTrack({ track: track, autoPlay: true }));
     dispatch(setShowMiniPlayer(true));
   };
 
@@ -93,8 +91,7 @@ const AISuggestions: React.FC = () => {
     if (currentTrack?.id === track.id) {
       dispatch(setPlaying(!isPlaying));
     } else {
-      dispatch(setCurrentTrack(track));
-      dispatch(setPendingPlay(true));
+      dispatch(setCurrentTrack({ track: track, autoPlay: true }));
       dispatch(setShowMiniPlayer(true));
     }
   };

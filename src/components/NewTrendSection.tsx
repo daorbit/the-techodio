@@ -12,7 +12,7 @@ import { useTheme } from "@mui/material/styles";
 import { Clock, Eye, Play } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { fetchTracksAsync } from "../store/tracksSlice";
-import { setCurrentTrack, setShowMiniPlayer, setPendingPlay } from "../store/audioSlice";
+import { setCurrentTrack, setShowMiniPlayer } from "../store/audioSlice";
 import type { Track } from "../utils/playlistData";
 
 interface CardData {
@@ -174,8 +174,7 @@ export default function TrendingNow() {
                   category: item.category,
                   audioUrl: item.audio,
                 };
-                dispatch(setCurrentTrack(trackData));
-                dispatch(setPendingPlay(true)); // Enable auto-play
+                dispatch(setCurrentTrack({ track: trackData, autoPlay: true }));
                 dispatch(setShowMiniPlayer(true));
               }}
             >

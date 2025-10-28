@@ -36,16 +36,16 @@ const audioSlice = createSlice({
   name: 'audio',
   initialState,
   reducers: {
-    setCurrentTrack: (state, action: PayloadAction<AudioTrack | null>) => {
-      state.currentTrack = action.payload;
+    setCurrentTrack: (state, action: PayloadAction<{track: AudioTrack | null, autoPlay?: boolean}>) => {
+      state.currentTrack = action.payload.track;
       // Reset playback state when track changes
-      if (action.payload) {
+      if (action.payload.track) {
         state.currentTime = 0;
         state.duration = 0;
         state.isPlaying = false;
         state.isLoading = true;
         state.buffered = 0;
-        state.pendingPlay = false;
+        state.pendingPlay = action.payload.autoPlay || false;
       }
     },
     setPlaying: (state, action: PayloadAction<boolean>) => {

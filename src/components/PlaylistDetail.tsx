@@ -24,7 +24,6 @@ import {
   setCurrentTrack,
   setPlaying,
   setShowMiniPlayer,
-  setPendingPlay,
 } from "../store/audioSlice";
 
 const PlaylistDetail = () => {
@@ -100,8 +99,7 @@ const PlaylistDetail = () => {
       dispatch(setShowMiniPlayer(true));
       dispatch(setPlaying(!isPlaying));
     } else {
-      dispatch(setCurrentTrack(track));
-      dispatch(setPendingPlay(true));
+      dispatch(setCurrentTrack({ track: track, autoPlay: true }));
       dispatch(setShowMiniPlayer(true));
     }
   };

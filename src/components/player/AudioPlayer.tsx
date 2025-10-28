@@ -8,7 +8,6 @@ import {
   setPlaying,
   setCurrentTime,
   setMuted,
-  setPendingPlay,
 } from "../../store/audioSlice";
 
 // Lazy load components for better performance
@@ -64,7 +63,6 @@ const AudioPlayer: React.FC = () => {
       // If currentTrack is already loaded and matches the ID, use it directly
       if (currentTrack && currentTrack.id === id) {
         setTrack(currentTrack);
-        dispatch(setPendingPlay(true));
         setIsLoadingTrack(false);
         return;
       }
@@ -81,8 +79,7 @@ const AudioPlayer: React.FC = () => {
         }
 
         setTrack(foundTrack);
-        dispatch(setCurrentTrack(foundTrack));
-        dispatch(setPendingPlay(true));
+        dispatch(setCurrentTrack({ track: foundTrack, autoPlay: true }));
         setIsLoadingTrack(false);
       } catch (error) {
         console.error("Failed to load track:", error);
