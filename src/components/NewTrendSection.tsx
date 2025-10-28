@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   Typography,
@@ -8,90 +8,60 @@ import {
   Chip,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { Clock, Eye, Play, Video } from "lucide-react";
+import { Clock, Eye, Play } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { fetchTracksAsync } from "../store/tracksSlice";
+import type { Track } from "../utils/playlistData";
 
-const topics = [
-  "All Topics",
-  "Tech History",
-  "Web Development",
-  "AI/ML",
-  "React",
-  "JavaScript",
-  "CSS",
-];
-
-const trendingData = [
-  // Audio data
-  {
-    id: "1",
-    category: "Tech History",
-    image: "/assets/Internet.png",
-    audio: "INTERNET_AUDIO",
-    title: "Introduction to Internet",
-    author: "DPK",
-    duration: "25:30",
-    views: "12.4K",
-    type: "audio",
-  },
-  {
-    id: "2",
-    category: "Web Development",
-    image: "/assets/web-d.png",
-    audio: "WEB_DEVELOPMENT",
-    title: "Web Development Essentials",
-    author: "AJ",
-    duration: "18:42",
-    views: "8.9K",
-    type: "audio",
-  },
-  {
-    id: "3",
-    category: "AI/ML",
-    image: "/assets/ml.png",
-    audio:
-      "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
-    title: "Machine Learning Basics",
-    author: "Sarah Chen",
-    duration: "3:30",
-    views: "15.2K",
-    type: "audio",
-  },
-  // Video data
-  {
-    id: "1",
-    category: "React",
-    image: "https://img.youtube.com/vi/Ke90Tje7VS0/0.jpg",
-    youtubeId: "Ke90Tje7VS0",
-    title: "React Tutorial for Beginners",
-    author: "Traversy Media",
-    duration: "1:45:30",
-    views: "2.5M",
-    type: "video",
-  },
-  {
-    id: "2",
-    category: "JavaScript",
-    image: "https://img.youtube.com/vi/PkZNo7MFNFg/0.jpg",
-    youtubeId: "PkZNo7MFNFg",
-    title: "JavaScript Fundamentals",
-    author: "freeCodeCamp",
-    duration: "3:20:15",
-    views: "5.1M",
-    type: "video",
-  },
-];
+interface CardData {
+  id: string;
+  category: string;
+  image: string;
+  audio: string;
+  title: string;
+  author: string;
+  duration: string;
+  views: string;
+  type: "audio";
+}
 
 export default function TrendingNow() {
   const theme = useTheme();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { tracks, loading, loaded } = useAppSelector((state) => state.tracks);
   const [activeTab, setActiveTab] = React.useState(0);
+  const [categories, setCategories] = React.useState<string[]>([]);
 
-  // Filter cards by topic
-  const filteredCards =
-    activeTab === 0
-      ? trendingData
-      : trendingData.filter((card) => card.category === topics[activeTab]);
+  useEffect(() => {
+    if (!loaded && !loading) {
+      dispatch(fetchTracksAsync({ page: 1, limit: 50 }));
+    }
+  }, [dispatch, loaded, loading]);
+
+  useEffect(() => {
+    if (tracks.length > 0) {
+      const uniqueCategories = Array.from(new Set(tracks.map(t => t.category)));
+      setCategories(uniqueCategories);
+    }
+  }, [tracks]);
+
+  // Filter tracks by category
+  const filteredTracks: Track[] = categories.length > 0 ? tracks.filter((track: Track) => track.category === categories[activeTab]) : [];
+
+  // Map tracks to card data
+  const filteredCards: CardData[] = filteredTracks.map((track: Track) => ({
+    id: track.id,
+    category: track.category,
+    image: track.thumbnail,
+    audio: track.audioUrl,
+    title: track.title,
+    author: track.author,
+    duration: track.duration,
+    views: track.listeners,
+    type: "audio",
+  }));
 
   return (
     <Box sx={{ paddingTop: { xs: 6, sm: 5 }, px: { xs: 0, sm: 0 } }}>
@@ -112,10 +82,10 @@ export default function TrendingNow() {
 
           {/* Filter Tabs */}
           <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
-            {topics.map((topic, index) => (
+            {categories.length > 0 && categories.map((category, index) => (
               <Chip
                 key={index}
-                label={topic}
+                label={category}
                 onClick={() => setActiveTab(index)}
                 variant={activeTab === index ? "filled" : "outlined"}
                 sx={{
@@ -166,11 +136,7 @@ export default function TrendingNow() {
                 },
               }}
               onClick={() =>
-                navigate(
-                  item.type === "audio"
-                    ? `/audio-player/${item.id}`
-                    : `/video-player/${item.id}`
-                )
+                navigate(`/audio-player/${item.id}`)
               }
             >
               {/* Media */}
@@ -183,7 +149,7 @@ export default function TrendingNow() {
                   sx={{ objectFit: "cover" }}
                 />
 
-                {/* Type Badge */}
+                {/* Play Badge */}
                 <Box
                   sx={{
                     position: "absolute",
@@ -199,13 +165,9 @@ export default function TrendingNow() {
                     gap: 0.5,
                   }}
                 >
-                  {item.type === "audio" ? (
-                    <Play size={12} />
-                  ) : (
-                    <Video size={12} />
-                  )}
+                  <Play size={12} />
                   <Typography variant="caption" sx={{ fontSize: "0.7rem" }}>
-                    {item.type}
+                    Audio
                   </Typography>
                 </Box>
               </Box>

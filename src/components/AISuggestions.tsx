@@ -50,11 +50,13 @@ const AISuggestions: React.FC = () => {
     };
   }, []);
 
+  const tracks = useAppSelector((state) => state.tracks.tracks);
+
   const handleGetSuggestions = async () => {
     setLoading(true);
     setError(null);
     try {
-      const suggestedTracks = await getTrackSuggestions();
+      const suggestedTracks = await getTrackSuggestions(tracks);
       setSuggestions(suggestedTracks);
       setShowSuggestions(true); // Show panel after getting suggestions
     } catch (error) {

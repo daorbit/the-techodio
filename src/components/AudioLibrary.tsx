@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Play, Clock, Grid, List, Heart, DownloadCloud } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
@@ -14,7 +14,6 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from "@mui/material";
-import { INTERNET_AUDIO, WEB_DEVELOPMENT } from "../utils/Audio";
 import {
   SectionContainer,
   CardsWrapper,
@@ -30,26 +29,24 @@ import {
   OverlayGradient,
 } from "./AudioLibrary.styled";
 import { useThemeContext } from "../hooks/useThemeContext";
-
-interface AudioTrack {
-  id: string;
-  title: string;
-  author: string;
-  description: string;
-  duration: string;
-  listeners: string;
-  date: string;
-  thumbnail: string;
-  category: string;
-  audioUrl?: string;
-}
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { fetchTracksAsync } from "../store/tracksSlice";
+import type { Track } from "../utils/playlistData";
 
 const AudioLibrary = () => {
   const navigate = useNavigate();
   const { isDarkMode } = useThemeContext();
   const theme = useTheme();
-  const [view, setView] = React.useState<"grid" | "list">("grid");
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const dispatch = useAppDispatch();
+  const { tracks, loading } = useAppSelector((state) => state.tracks);
+
+  useEffect(() => {
+    if (tracks.length === 0 && !loading) {
+      dispatch(fetchTracksAsync({ page: 1, limit: 50 }));
+    }
+  }, [dispatch, tracks.length, loading]);
+  const [view, setView] = React.useState<"grid" | "list">("grid");
   const iconSize = isMobile ? 18 : 16;
 
   React.useEffect(() => {
@@ -86,67 +83,7 @@ const AudioLibrary = () => {
     e.currentTarget.src = getDefaultAudioThumbnail();
   };
 
-  const audioTracks: AudioTrack[] = [
-    {
-      id: "1",
-      title: "इंटरनेट का जादू - कैसे काम करता है हमारा डिजिटल संसार",
-      author: "Digital Education Hindi",
-      description:
-        "ARPANET से लेकर आज के इंटरनेट तक - समझिए कैसे काम करता है हमारा डिजिटल संसार।",
-      duration: "25:30",
-      listeners: "3,547",
-      date: "2024-09-20",
-      thumbnail:
-        "https://res.cloudinary.com/dj3xx136b/image/upload/v1758615092/j0maltggz7tjhnrsp5q1.png",
-      category: "Technology",
-      audioUrl: INTERNET_AUDIO,
-    },
-    {
-      id: "2",
-      title: "CORS क्या है? क्यों जरूरी है? - वेब सिक्यूरिटी",
-      author: "Web Security Hindi",
-      description:
-        "CORS की पूरी जानकारी - क्यों जरूरी है, कैसे काम करता है, और वेब सिक्यूरिटी में इसकी भूमिका।",
-      duration: "18:42",
-      listeners: "2,891",
-      date: "2024-09-21",
-      thumbnail:
-        "https://res.cloudinary.com/dj3xx136b/image/upload/v1758615175/txikr2f46omistu5f0rq.png",
-      category: "Web Security",
-      audioUrl: WEB_DEVELOPMENT,
-    },
-    {
-      id: "3",
-      title: "Machine Learning Basics",
-      author: "Sarah Chen",
-      description:
-        "An introduction to machine learning fundamentals and key concepts.",
-      duration: "3:30",
-      listeners: "15.2K",
-      date: "2024-09-22",
-      thumbnail: "/assets/ml.png",
-      category: "AI/ML",
-      audioUrl:
-        "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
-    },
-    {
-      id: "4",
-      title: "Vector Databases Explained",
-      author: "Sarah Chen",
-      description:
-        "Introduction to vector databases and their applications in AI.",
-      duration: "4:15",
-      listeners: "12.8K",
-      date: "2024-09-22",
-      thumbnail:
-        "https://res.cloudinary.com/dj3xx136b/image/upload/v1758615175/txikr2f46omistu5f0rq.png",
-      category: "DB",
-      audioUrl:
-        "https://res.cloudinary.com/dgvoocfla/video/upload/v1758732667/%E0%A4%B5%E0%A5%87%E0%A4%95%E0%A5%8D%E0%A4%9F%E0%A4%B0_%E0%A4%A1%E0%A5%87%E0%A4%9F%E0%A4%BE%E0%A4%AC%E0%A5%87%E0%A4%B8_%E0%A4%94%E0%A4%B0_RAG__AI_%E0%A4%B5_LLM_%E0%A4%95%E0%A5%8B_%E0%A4%AC%E0%A4%BE%E0%A4%B9%E0%A4%B0%E0%A5%80_%E0%A4%9C%E0%A5%8D%E0%A4%9E%E0%A4%BE%E0%A4%A8_%E0%A4%B8%E0%A5%87_%E0%A4%9C%E0%A5%8B%E0%A4%A1%E0%A4%BC%E0%A4%A8%E0%A5%87_%E0%A4%B5%E0%A4%BE%E0%A4%B2%E0%A5%80_%E0%A4%97_uhpz35.mp4",
-    },
-  ];
-
-  const handleTrackClick = (track: AudioTrack) => {
+  const handleTrackClick = (track: Track) => {
     navigate(`/audio-player/${track.id}`);
   };
 
@@ -251,7 +188,7 @@ const AudioLibrary = () => {
       </HeaderRow>
 
       <CardsWrapper view={view}>
-        {audioTracks.map((track) => (
+        {tracks.map((track) => (
           <StyledCard
             key={track.id}
             view={view}

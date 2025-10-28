@@ -9,6 +9,7 @@ export interface Track {
   thumbnail: string;
   category: string;
   audioUrl: string;
+  trending?: boolean;
 }
 
 export interface Playlist {

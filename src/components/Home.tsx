@@ -135,45 +135,7 @@ export default function NeuralNetworksHero() {
               />
             </Box>
           </Box>
-          {/* <Box sx={{ paddingTop: 5 }}>
-        <Box sx={{ mx: "auto" }}>
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-              gap: 3,
-            }}
-          >
-            {[
-              { icon: Users, value: "2.5M+", label: "Active Users" },
-              { icon: Headphones, value: "15K+", label: "Audio Episodes" },
-              { icon: Clock, value: "500K+", label: "Hours Listened" },
-              { icon: Star, value: "4.9", label: "Average Rating" },
-            ].map((stat, index) => (
-              <Box
-                key={index}
-                sx={{
-                  textAlign: "center",
-                  p: 2,
-                  borderRadius: "8px",
-                  backgroundColor: theme.palette.background.paper,
-                  border: `1px solid ${theme.palette.divider}`,
-                }}
-              >
-                <Box sx={{ color: theme.palette.primary.main, mb: 1 }}>
-                  <stat.icon size={32} />
-                </Box>
-                <Typography variant="h4" fontWeight="bold" sx={{ mb: 0.5 }}>
-                  {stat.value}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {stat.label}
-                </Typography>
-              </Box>
-            ))}
-          </Box>
-        </Box>
-      </Box> */}
+           
 
           <Box sx={{ paddingTop: 4 }}>
             <Box sx={{ mx: "auto" }}>
@@ -197,9 +159,9 @@ export default function NeuralNetworksHero() {
               >
                 {[
                   {
-                    title: "AI & Machine Learning",
+                    title: "System Design",
                     description:
-                      "Dive into artificial intelligence and neural networks",
+                      "Architecting scalable and efficient systems",
                   },
                   {
                     title: "Web Development",

@@ -1,5 +1,4 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { SAMPLE_PLAYLISTS } from "../utils/playlistData";
 import type { Track } from "../utils/playlistData";
 
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
@@ -10,17 +9,7 @@ if (!API_KEY) {
 
 const genAI = new GoogleGenerativeAI(API_KEY || "");
 
-const getAllTracks = (): Track[] => {
-  const allTracks: Track[] = [];
-  SAMPLE_PLAYLISTS.forEach((playlist) => {
-    allTracks.push(...playlist.tracks);
-  });
-  return allTracks;
-};
-
-export const getTrackSuggestions = async (): Promise<Track[]> => {
-  const allTracks = getAllTracks();
-
+export const getTrackSuggestions = async (tracks: Track[]): Promise<Track[]> => {
   if (!API_KEY) {
     throw new Error(
       "Gemini API key not available. Unable to generate AI suggestions."
@@ -30,7 +19,7 @@ export const getTrackSuggestions = async (): Promise<Track[]> => {
   try {
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
-    const tracksList = allTracks
+    const tracksList = tracks
       .map((track) => `${track.title} by ${track.author} (${track.category})`)
       .join("\n");
 
@@ -58,13 +47,13 @@ Return only the JSON array, no other text.`;
       );
       suggestedTitles = text
         .split(",")
-        .map((title) => title.trim().replace(/["[\]]/g, ""));
+        .map((title: string) => title.trim().replace(/["[\]]/g, ""));
     }
 
     const suggestions: Track[] = [];
     for (const title of suggestedTitles) {
-      const track = allTracks.find(
-        (t) =>
+      const track = tracks.find(
+        (t: Track) =>
           t.title.toLowerCase().includes(title.toLowerCase()) ||
           title.toLowerCase().includes(t.title.toLowerCase())
       );
@@ -75,8 +64,8 @@ Return only the JSON array, no other text.`;
     }
 
     while (suggestions.length < 3) {
-      const remaining = allTracks.filter(
-        (t) => !suggestions.find((s) => s.id === t.id)
+      const remaining = tracks.filter(
+        (t: Track) => !suggestions.find((s) => s.id === t.id)
       );
       if (remaining.length === 0) break;
       const randomTrack =

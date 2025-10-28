@@ -80,27 +80,6 @@ const AudioPlayer: React.FC = () => {
           return;
         }
 
-        // For direct URL access, we'll validate the audio URL but be more lenient
-        if (foundTrack.audioUrl) {
-          try {
-            const isValidUrl = await AudioTrackService.validateAudioUrl(
-              foundTrack.audioUrl
-            );
-            if (!isValidUrl) {
-              console.warn(
-                "Audio URL validation failed, but proceeding with track load"
-              );
-              // We'll still proceed to load the track and let the audio element handle errors
-            }
-          } catch (validationError) {
-            console.warn(
-              "Audio URL validation threw error, but proceeding:",
-              validationError
-            );
-            // Continue with track loading even if validation fails
-          }
-        }
-
         setTrack(foundTrack);
         dispatch(setCurrentTrack(foundTrack));
         dispatch(setPendingPlay(true));
