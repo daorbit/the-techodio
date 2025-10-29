@@ -171,7 +171,6 @@ export const AppThemeProvider: React.FC<AppThemeProviderProps> = ({ children }) 
               : '0 4px 6px -1px rgba(30, 41, 59, 0.1), 0 2px 4px -1px rgba(30, 41, 59, 0.06)',
             transition: 'all 0.2s ease-in-out',
             '&:hover': {
-              transform: 'translateY(-2px)',
               boxShadow: themeMode === 'dark' 
                 ? '0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.4)' 
                 : '0 10px 15px -3px rgba(30, 41, 59, 0.1), 0 4px 6px -2px rgba(30, 41, 59, 0.05)',

@@ -13,7 +13,7 @@ import {
   ListItemAvatar,
   ListItemText,
   ListItemSecondaryAction,
-  CircularProgress,
+  Skeleton,
 } from "@mui/material";
 import { ArrowLeft, Play, Pause, Clock, Music, Users } from "lucide-react";
 import { useThemeContext } from "../hooks/useThemeContext";
@@ -43,16 +43,99 @@ const PlaylistDetail = () => {
       <Box
         sx={{
           minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
           background:
             themeMode === "dark"
               ? "linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%)"
               : "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
+          p: 3,
         }}
       >
-        <CircularProgress size={60} />
+        {/* Back Button Skeleton */}
+        <Skeleton variant="rectangular" width={150} height={40} sx={{ mb: 3 }} />
+
+        {/* Playlist Header Skeleton */}
+        <Box
+          sx={{
+            display: "flex",
+            gap: { xs: 2, md: 4 },
+            mb: { xs: 2, md: 4 },
+            flexDirection: { xs: "column", md: "row" },
+            alignItems: { xs: "center", md: "flex-start" },
+          }}
+        >
+          {/* Cover Image Skeleton */}
+          <Skeleton
+            variant="rectangular"
+            width={300}
+            height={300}
+            sx={{ borderRadius: 3, mb: { xs: 2, md: 0 } }}
+          />
+
+          {/* Info Skeleton */}
+          <Box sx={{ flex: 1, minWidth: { xs: "100%", md: 300 } }}>
+            <Skeleton variant="text" width="80%" height={60} sx={{ mb: 2 }} />
+            <Skeleton variant="text" width="100%" height={20} sx={{ mb: 1 }} />
+            <Skeleton variant="text" width="90%" height={20} sx={{ mb: 3 }} />
+
+            {/* Stats Skeleton */}
+            <Box sx={{ display: "flex", gap: 3, mb: 3 }}>
+              <Skeleton variant="text" width={80} height={20} />
+              <Skeleton variant="text" width={80} height={20} />
+              <Skeleton variant="text" width={80} height={20} />
+            </Box>
+
+            {/* Tags Skeleton */}
+            <Box sx={{ display: "flex", gap: 1, mb: 3 }}>
+              <Skeleton variant="rectangular" width={60} height={32} />
+              <Skeleton variant="rectangular" width={80} height={32} />
+              <Skeleton variant="rectangular" width={70} height={32} />
+            </Box>
+          </Box>
+        </Box>
+
+        {/* Tracks List Skeleton */}
+        <Skeleton variant="text" width={100} height={40} sx={{ mb: 3 }} />
+        <Card
+          sx={{
+            background:
+              themeMode === "dark"
+                ? "rgba(255,255,255,0.05)"
+                : "rgba(255,255,255,0.9)",
+            backdropFilter: "blur(20px)",
+            border: `1px solid ${
+              themeMode === "dark"
+                ? "rgba(255,255,255,0.1)"
+                : "rgba(0,0,0,0.08)"
+            }`,
+            borderRadius: 3,
+          }}
+        >
+          {Array.from({ length: 5 }).map((_, index) => (
+            <Box
+              key={index}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                p: 2,
+                borderBottom:
+                  index < 4
+                    ? `1px solid ${
+                        themeMode === "dark"
+                          ? "rgba(255,255,255,0.1)"
+                          : "rgba(0,0,0,0.08)"
+                      }`
+                    : "none",
+              }}
+            >
+              <Skeleton variant="rectangular" width={50} height={50} sx={{ mr: 2, borderRadius: 1 }} />
+              <Box sx={{ flex: 1 }}>
+                <Skeleton variant="text" width="70%" height={24} sx={{ mb: 1 }} />
+                <Skeleton variant="text" width="50%" height={16} />
+              </Box>
+              <Skeleton variant="circular" width={36} height={36} />
+            </Box>
+          ))}
+        </Card>
       </Box>
     );
   }
@@ -352,7 +435,7 @@ const PlaylistDetail = () => {
             fontWeight: "bold",
             mb: 3,
             color: themeMode === "dark" ? "#fff" : "#000",
-            fontSize: { xs: "1.5rem", md: "2rem" },
+            fontSize: { xs: "1.5rem", md: "1.5rem" },
           }}
         >
           Tracks
