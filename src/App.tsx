@@ -29,11 +29,13 @@ function App() {
   const dispatch = useAppDispatch();
   const { currentTrack } = useAppSelector((state) => state.audio);
 
-   useGlobalAudioPlayer();
+  useGlobalAudioPlayer();
 
-  const isPlayerPage = location.pathname.startsWith("/audio-player") || location.pathname.startsWith("/video-player");
+  const isPlayerPage =
+    location.pathname.startsWith("/audio-player") ||
+    location.pathname.startsWith("/video-player");
 
-   useEffect(() => {
+  useEffect(() => {
     if (isPlayerPage) {
       dispatch(setShowMiniPlayer(false));
     } else if (currentTrack) {
@@ -49,11 +51,12 @@ function App() {
   }, [location.pathname]);
 
   const rootStyle: React.CSSProperties = {
-    fontFamily: "'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif",
+    fontFamily:
+      "'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif",
     minHeight: "100vh",
     width: "100%",
-     color: themeMode === 'dark' ? '#f1f5f9' : '#1e293b',
-    transition: 'all 0.3s ease',
+    color: themeMode === "dark" ? "#f1f5f9" : "#1e293b",
+    transition: "all 0.3s ease",
   };
 
   const bodyStyle: React.CSSProperties = {
@@ -63,30 +66,14 @@ function App() {
   };
 
   const headerWrapperStyle: React.CSSProperties = {
-    height: "64px",
-    position: "fixed",
-    top: 0,
-    left: 0,
-    right: 0,
-    zIndex: 1100,
-    background: isMobile
-      ? themeMode === 'dark'
-        ? "linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%)"
-        : "linear-gradient(135deg, #4f46e5 0%, #6366f1 100%)"
-      : "transparent",
-    backdropFilter: "blur(10px)",
-    borderBottom: `1px solid ${themeMode === 'dark' ? 'rgba(241, 245, 249, 0.1)' : 'rgba(30, 41, 59, 0.1)'}`,
     display: isMobile && !isPlayerPage ? "block" : "none",
-    boxShadow: themeMode === 'dark' 
-      ? '0 4px 6px -1px rgba(0, 0, 0, 0.3)' 
-      : '0 4px 6px -1px rgba(30, 41, 59, 0.1)',
   };
 
   const contentContainerStyle: React.CSSProperties = {
     display: "flex",
     flex: 1,
     minHeight: 0,
-    marginTop: isMobile && !isPlayerPage ? "64px" : 0,
+    marginTop: isMobile && !isPlayerPage ? "0px" : 0,
   };
 
   const sidebarWrapperStyle: React.CSSProperties = {
@@ -108,9 +95,10 @@ function App() {
     padding: isPlayerPage ? "0" : "24px",
     overflowX: "hidden" as const,
     overflowY: "auto",
-    background: themeMode === 'dark' 
-      ? "radial-gradient(ellipse at top, #1a1a1a 0%, #0a0a0a 100%)"
-      : "radial-gradient(ellipse at top, #f8fafc 0%, #e2e8f0 100%)",
+    background:
+      themeMode === "dark"
+        ? "radial-gradient(ellipse at top, #1a1a1a 0%, #0a0a0a 100%)"
+        : "radial-gradient(ellipse at top, #f8fafc 0%, #e2e8f0 100%)",
     minHeight: "100vh",
   };
 
@@ -157,9 +145,9 @@ function App() {
           </div>
         </div>
 
-         <MiniAudioPlayer />
+        <MiniAudioPlayer />
 
-         <AISuggestions />
+        <AISuggestions />
       </div>
     </>
   );

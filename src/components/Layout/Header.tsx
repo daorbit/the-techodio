@@ -22,16 +22,19 @@ const Header = ({ isMobile, drawerOpen, setDrawerOpen }: HeaderProps) => {
         alignItems: "center",
         justifyContent: "space-between",
         padding: "0 16px",
-        height: "100%",
+        height: "50px",
         background: isDarkMode
           ? "linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%)"
           : "linear-gradient(135deg, #4f46e5 0%, #6366f1 100%)",
         color: "#fff",
-        borderBottom: `1px solid ${isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.2)'}`,
+        borderBottom: `1px solid ${
+          isDarkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(255, 255, 255, 0.2)"
+        }`,
         backdropFilter: "blur(10px)",
-        boxShadow: isDarkMode 
-          ? '0 4px 6px -1px rgba(0, 0, 0, 0.4)' 
-          : '0 4px 6px -1px rgba(30, 41, 59, 0.1)',
+        boxShadow: isDarkMode
+          ? "0 4px 6px -1px rgba(0, 0, 0, 0.4)"
+          : "0 4px 6px -1px rgba(30, 41, 59, 0.1)",
+        borderRadius: "0 0 12px 12px",
       }}
     >
       <IconButton
@@ -41,7 +44,9 @@ const Header = ({ isMobile, drawerOpen, setDrawerOpen }: HeaderProps) => {
           borderRadius: "8px",
           transition: "all 0.2s ease",
           "&:hover": {
-            backgroundColor: isDarkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(255, 255, 255, 0.2)",
+            backgroundColor: isDarkMode
+              ? "rgba(255, 255, 255, 0.1)"
+              : "rgba(255, 255, 255, 0.2)",
             transform: "scale(1.05)",
           },
         }}
@@ -57,7 +62,9 @@ const Header = ({ isMobile, drawerOpen, setDrawerOpen }: HeaderProps) => {
             borderRadius: "8px",
             transition: "all 0.2s ease",
             "&:hover": {
-              backgroundColor: isDarkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(255, 255, 255, 0.2)",
+              backgroundColor: isDarkMode
+                ? "rgba(255, 255, 255, 0.1)"
+                : "rgba(255, 255, 255, 0.2)",
               transform: "scale(1.05)",
             },
           }}
