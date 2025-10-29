@@ -3,7 +3,6 @@ import Sidebar from "./components/Layout/Sidebar";
 import Header from "./components/Layout/Header";
 import { CssBaseline, useMediaQuery } from "@mui/material";
 import { Routes, Route, useLocation } from "react-router-dom";
-import Dashboard from "./components/Dashboard";
 import { useState, useEffect } from "react";
 import AudioLibrary from "./components/AudioLibrary";
 import VideoLibrary from "./components/VideoLibrary";
@@ -132,7 +131,6 @@ function App() {
               <main style={contentStyle}>
                 <Routes>
                   <Route path="/" element={<NeuralNetworksHero />} />
-                  <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/audio-library" element={<AudioLibrary />} />
                   <Route path="/video-library" element={<VideoLibrary />} />
                   <Route path="/playlists" element={<Playlists />} />

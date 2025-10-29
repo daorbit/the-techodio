@@ -52,7 +52,7 @@ const AudioLibrary = () => {
     if (isMobile && view !== "grid") {
       setView("grid");
     }
-  }, [isMobile, view]);
+  }, [isMobile, view]); 
 
   const handleViewChange = (
     _event: React.MouseEvent<HTMLElement>,
