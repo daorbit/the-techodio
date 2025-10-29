@@ -52,8 +52,7 @@ function App() {
     fontFamily: "'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif",
     minHeight: "100vh",
     width: "100%",
-    backgroundColor: themeMode === 'dark' ? '#0f0f23' : '#f8fafc',
-    color: themeMode === 'dark' ? '#f1f5f9' : '#1e293b',
+     color: themeMode === 'dark' ? '#f1f5f9' : '#1e293b',
     transition: 'all 0.3s ease',
   };
 
@@ -158,11 +157,9 @@ function App() {
           </div>
         </div>
 
-        {/* Mini Audio Player */}
-        <MiniAudioPlayer />
+         <MiniAudioPlayer />
 
-        {/* AI Suggestions Floating Button */}
-        <AISuggestions />
+         <AISuggestions />
       </div>
     </>
   );
