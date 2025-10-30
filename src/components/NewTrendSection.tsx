@@ -51,7 +51,7 @@ export default function TrendingNow() {
   useEffect(() => {
     if (tracks.length > 0) {
       const uniqueCategories = Array.from(
-        new Set(tracks.map((t) => t.category))
+        new Set(tracks.map((t) => t.category).filter(cat => cat.trim() !== ''))
       );
       setCategories(uniqueCategories);
     }
