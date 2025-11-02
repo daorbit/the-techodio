@@ -38,6 +38,11 @@ const PlaylistDetail = () => {
 
   const { playlist, loading, error } = usePlaylist(id);
 
+  const formatDuration = (duration: string): string => {
+    const [min, sec] = duration.split(':');
+    return `${min} min ${sec} sec`;
+  };
+
   if (loading) {
     return (
       <Box
@@ -368,7 +373,7 @@ const PlaylistDetail = () => {
                 variant="body2"
                 sx={{ color: themeMode === "dark" ? "#fff" : "#000" }}
               >
-                {playlist.duration}
+                {formatDuration(playlist.duration)}
               </Typography>
             </Box>
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>

@@ -8,8 +8,8 @@ import {
   Typography,
   CardContent,
   CardMedia,
-  Select,
-  MenuItem,
+  // Select,
+  // MenuItem,
   ToggleButton,
   ToggleButtonGroup,
   Skeleton,
@@ -18,7 +18,7 @@ import {
   SectionContainer,
   CardsWrapper,
   StyledCard,
-  StyledChip,
+  // StyledChip,
   PlayButton,
   ActionsRow,
   HeaderRow,
@@ -115,7 +115,7 @@ const AudioLibrary = () => {
             placeholder="Search audio tracks..."
             inputProps={{ "aria-label": "search audio tracks" }}
           />
-          <Select
+          {/* <Select
             defaultValue="all"
             size="small"
             sx={{
@@ -135,7 +135,7 @@ const AudioLibrary = () => {
             <MenuItem value="technology">Technology</MenuItem>
             <MenuItem value="web-security">Web Security</MenuItem>
             <MenuItem value="ai-ml">AI/ML</MenuItem>
-          </Select>
+          </Select> */}
         </Controls>
 
         <Controls
@@ -274,7 +274,7 @@ const AudioLibrary = () => {
                     sx={{ filter: "blur(1.5px)" }}
                   />
                   <OverlayGradient />
-                  <StyledChip label={track.category} color="primary" />
+                  {/* <StyledChip label={track.category} color="primary" /> */}
                   <PlayButton aria-label="play" size="large">
                     <Play size={22} />
                   </PlayButton>
